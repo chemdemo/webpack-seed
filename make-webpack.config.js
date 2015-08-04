@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-05 02:38:41
+* @Last Modified time: 2015-08-05 03:40:36
 */
 
 'use strict';
@@ -110,12 +110,16 @@ function makeConf(options) {
         // 编译阶段，css分离出来单独引入
         var cssLoader = {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract('css?minimize') // enable minimize
+            loader: ExtractTextPlugin.extract('style', 'css?minimize') // enable minimize
         };
 
         config.module.loaders.push(cssLoader);
         config.plugins.push(
             new ExtractTextPlugin('css/[contenthash:8].[name].min.css', {
+                // 当allChunks指定为false时，css loader必须指定怎么处理
+                // additional chunk所依赖的css，即指定`ExtractTextPlugin.extract()`
+                // 第一个参数`notExtractLoader`，一般是使用style-loader
+                // @see https://github.com/webpack/extract-text-webpack-plugin
                 allChunks: false
             })
         );

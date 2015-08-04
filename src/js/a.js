@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-05 00:25:43
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-05 02:49:34
+* @Last Modified time: 2015-08-05 03:15:36
 */
 
 'use strict';
@@ -25,6 +25,8 @@ if('dialog' === component) {
     require.ensure([], function(require) {
         var dialog = require('./components/dialog');
         // todo ...
+
+        $('#dialog').removeClass('none');
     });
 }
 
@@ -32,6 +34,8 @@ if('toast' === component) {
     require.ensure([], function(require) {
         var toast = require('./components/toast');
         // todo ...
+
+        $('#toast').removeClass('none');
     });
 }
 
