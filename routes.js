@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-07-31 11:41:38
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-05 01:36:50
+* @Last Modified time: 2015-08-05 03:45:03
 */
 
 'use strict';
@@ -32,5 +32,5 @@ module.exports = function(router, app) {
     });
 
     // proxy api
-    router.get('/api/detail', proxy({url: 'http://foo.bar.com'}));
+    router.get('/api/foo/bar', proxy({url: 'http://foo.bar.com'}));
 };
