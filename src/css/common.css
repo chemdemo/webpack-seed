@@ -1,0 +1,111 @@
+html, body, h1, h2, h3, h4, h5, h6, p, ul, li, input, button, textarea, section {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  -webkit-user-select: none;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  font-size: 312.5%;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #FFF;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+body, input, button, textarea {
+  font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+  font-size: 0.28rem;
+  border: none;
+  outline: none;
+}
+
+a, img {
+  -webkit-touch-callout: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  -webkit-user-modify: read-write-plaintext-only;
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul, ol, li {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+.none {
+  display: none;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.clearfix {
+  content: ' ';
+  display: block;
+  clear: both;
+  overflow: hidden;
+}
+
+.f-l {
+  float: left;
+}
+
+.f-r {
+  float: right;
+}
+
+[class^="i-"],
+[class^="icon-"] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icons-sprite, .icon-cart, .icon-house {
+  background-image: url('../img/sprites-icons.png');
+  background-repeat: no-repeat;
+}
+
+.icon-cart {
+  background-position: 0 0;
+  height: 42px;
+  width: 44px;
+}
+
+.icon-house {
+  background-position: 0 -44px;
+  height: 43px;
+  width: 46px;
+}
+
+.icon-cart {
+  -webkit-background-size: 23px 44px;
+  background-size: 23px 44px;
+  width: 22px;
+  height: 21px;
+  background-position: 0 0;
+}
+
+.icon-house {
+  -webkit-background-size: 23px 44px;
+  background-size: 23px 44px;
+  width: 23px;
+  height: 22px;
+  background-position: 0 -22px;
+}

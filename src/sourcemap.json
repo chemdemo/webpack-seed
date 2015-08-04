@@ -1,0 +1,8 @@
+{
+    "zepto": "js/lib/zepto",
+    "underscore": "js/lib/underscore",
+
+    "commonCss": "css/common.css",
+
+    "webpackLogo": "img/webpack.png"
+}

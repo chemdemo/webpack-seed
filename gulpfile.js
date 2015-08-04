@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-06-16 15:19:59
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-04 01:19:52
+* @Last Modified time: 2015-08-04 19:02:09
 */
 
 'use strict';
@@ -55,7 +55,7 @@ gulp.task('hmr', function(done) {
         stats: webpackDevConf.devServer.stats,
     });
 
-    devSvr.listen(8080, 'localhost', function(err) {
+    devSvr.listen(8080, '0.0.0.0', function(err) {
         if(err) throw new gutil.PluginError('webpack-dev-server', err);
 
         gutil.log('[webpack-dev-server]',

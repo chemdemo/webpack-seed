@@ -1,0 +1,85 @@
+@charset "utf-8";
+
+@import "variables";
+@import "prefixer";
+@import "mixins";
+
+html, body, h1, h2, h3, h4, h5, h6, p, ul, li, input, button, textarea, section {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    -webkit-user-select: none;
+    user-select: none;
+    overflow-x: hidden;
+}
+
+html {
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    font-size: 312.5%; // 50px
+}
+
+body {
+    overflow-x: hidden;
+    background-color: $bg-color;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-overflow-scrolling: touch;
+}
+
+body, input, button, textarea {
+    font-family: $g-font-family;
+    font-size: $g-font-size;
+    border: none;
+    outline: none;
+}
+
+a, img {
+    -webkit-touch-callout: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    -webkit-user-modify: read-write-plaintext-only;
+    -webkit-tap-highlight-color: transparent;
+}
+
+ul, ol, li {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+.none {
+    display: none;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.clearfix {
+    content: ' ';
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+
+.f-l {
+    float: left;
+}
+
+.f-r {
+    float: right;
+}
+
+[class^="i-"],
+[class^="icon-"] {
+    @include inline-block(middle);
+}
+
+@import "sprites";

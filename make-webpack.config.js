@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-04 00:55:55
+* @Last Modified time: 2015-08-05 02:38:41
 */
 
 'use strict';
@@ -22,7 +22,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 
-var pageSrc = path.resolve(process.cwd(), 'src');
+var srcDir = path.resolve(process.cwd(), 'src');
 var assets = 'assets/';
 var sourceMap = require('./src/sourcemap.json');
 
@@ -43,29 +43,20 @@ function makeConf(options) {
             // 在debug模式下，__build目录是虚拟的，webpack的dev server存储在内存里
             path: path.resolve(debug ? '__build' : assets),
             filename: debug ? '[name].js' : 'js/[chunkhash:8].[name].min.js',
-            chunkFilename: debug ? '[name].js' : 'js/[chunkhash:8].chunk.min.js',
-            hotUpdateChunkFilename: debug ?'[name].js' : 'js/[id].[chunkhash:8].min.js',
+            chunkFilename: debug ? '[chunkhash:8].chunk.js' : 'js/[chunkhash:8].chunk.min.js',
+            hotUpdateChunkFilename: debug ?'[id].[chunkhash:8].js' : 'js/[id].[chunkhash:8].min.js',
             publicPath: ''
         },
 
         resolve: {
-            root: [pageSrc],
+            root: [srcDir],
             alias: sourceMap,
-            extensions: ['', '.js', '.css', '.scss', '.html', '.tpl', '.png', '.jpg']
+            extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
         },
 
         resolveLoader: {
             root: path.join(__dirname, 'node_modules')
         },
-
-        plugins: [
-            new CommonsChunkPlugin({
-                name: 'vendors',
-                chunks: chunks,
-                // Modules must be shared between 3 entries
-                minChunks: chunks.length // 提取所有chunks共同依赖的模块
-            })
-        ],
 
         module: {
             noParse: ['zepto'],
@@ -89,6 +80,15 @@ function makeConf(options) {
             ]
         },
 
+        plugins: [
+            new CommonsChunkPlugin({
+                name: 'vendors',
+                chunks: chunks,
+                // Modules must be shared between all entries
+                minChunks: chunks.length // 提取所有chunks共同依赖的模块
+            })
+        ],
+
         devServer: {
             stats: {
                 cached: false,
@@ -104,19 +104,25 @@ function makeConf(options) {
             test: /\.css$/,
             loader: 'style!css'
         };
+
         config.module.loaders.push(cssLoader);
     } else {
         // 编译阶段，css分离出来单独引入
         var cssLoader = {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract('css?sourceMap&-minimize')
+            loader: ExtractTextPlugin.extract('css?minimize') // enable minimize
         };
+
         config.module.loaders.push(cssLoader);
-        config.plugins.push(new ExtractTextPlugin('css/[chunkhash:8].[name].css'));
+        config.plugins.push(
+            new ExtractTextPlugin('css/[contenthash:8].[name].min.css', {
+                allChunks: false
+            })
+        );
 
         // 自动生成入口文件，入口js名必须和入口文件名相同
         // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
-        var pages = fs.readdirSync(pageSrc);
+        var pages = fs.readdirSync(srcDir);
 
         pages.forEach(function(filename) {
             var m = filename.match(/(.+)\.html$/);
@@ -124,7 +130,7 @@ function makeConf(options) {
             if(m) {
                 // @see https://github.com/kangax/html-minifier
                 var conf = {
-                    template: path.resolve(pageSrc, filename),
+                    template: path.resolve(srcDir, filename),
                     filename: filename
                 };
 
@@ -144,7 +150,7 @@ function makeConf(options) {
 }
 
 function genEntries() {
-    var jsDir = path.resolve(pageSrc, 'js');
+    var jsDir = path.resolve(srcDir, 'js');
     var names = fs.readdirSync(jsDir);
     var map = {};
 

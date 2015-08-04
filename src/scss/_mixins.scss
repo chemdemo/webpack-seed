@@ -1,0 +1,36 @@
+@import "variables";
+@import "prefixer";
+
+@mixin clearfix {
+    content: ' ';
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+
+@mixin inline-block($align: auto) {
+    display: inline-block;
+    vertical-align: $align;
+}
+
+@mixin flex-parent {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+@mixin flex-child {
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    flex: 1;
+}
+
+@mixin ellipsis($width: 100%) {
+    width: $width;
+    overflow: hidden;
+    white-space: nowrap;
+    word-break: keep-all;
+    text-overflow: ellipsis;
+}

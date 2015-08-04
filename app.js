@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2015-08-04 01:19:36
+ * @Last Modified time: 2015-08-05 00:54:19
  */
 
 'use strict';
@@ -88,6 +88,6 @@ app.use(serve(path.resolve(__dirname, viewDir), {
 
 app = http.createServer(app.callback());
 
-app.listen(8080, function() {
+app.listen(8080, '0.0.0.0', function() {
     console.log('app listen success.');
 });

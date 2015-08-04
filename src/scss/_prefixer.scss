@@ -1,0 +1,160 @@
+// @see https://github.com/guerrero/sass-prefixer/blob/master/_sass-prefixer.scss
+
+// Variables
+
+// Supported web browsers (the order should not be modified)
+$wbrowser-list: (firefox, chrome, safari, opera)!default;
+
+// Support(all, firefox, chrome, safari, ms, opera)
+// If you are going to use two or more browsers names you need to
+// include they between brackets like in $wbrowser-list
+$prefixer-web-browsers-support: all !default;
+
+// Nested css properties list by web browser
+// The properties of this list support the vendor prefixers for 2 last version
+// of each supported browser
+$prefixer-property-list:
+// firefox, chrome, safari, ie, opera;
+align-content null -webkit-align-content null -ms-flex-line-pack null,
+align-items -moz-box-align -webkit-box-align -webkit-align-items -ms-flex-align null,
+align-self null -webkit-align-self null -ms-flex-item-align null,
+animation null null -webkit-animation null -o-animation,
+animation-delay null -webkit-animation-delay null null -o-animation-delay,
+animation-direction null -webkit-animation-direction null null -o-animation-direction,
+animation-duration null -webkit-animation-duration null null -o-animation-duration,
+animation-fill-mode null -webkit-animation-fill-mode null null -o-animation-fill-mode,
+animation-iteration-count null -webkit-animation-iteration-count null null -o-animation-iteration-count,
+animation-name null -webkit-animation-name null null -o-animation-name,
+animation-play-state null -webkit-animation-play-state null null -o-animation-play-state,
+animation-timing-function null -webkit-animation-timing-function null null -o-animation-timing-function,
+backface-visibility null null -webkit-backface-visibility -ms-backface-visibility -o-backface-visibility,
+border-bottom-left-radius null null -webkit-border-bottom-left-radius null null,
+border-bottom-right-radius null null -webkit-border-bottom-right-radius null null,
+border-image null null -webkit-border-image null -o-border-image,
+border-radius null null -webkit-border-radius null null,
+border-top-left-radius null null -webkit-border-top-left-radius null null,
+border-top-right-radius null null -webkit-border-top-right-radius null null,
+box-shadow null null -webkit-box-shadow null null,
+box-sizing -moz-box-sizing null -webkit-box-sizing null null,
+break-after -moz-break-after null -webkit-break-after null null,
+break-before -moz-break-before null -webkit-break-before null null,
+break-inside -moz-break-inside null -webkit-break-inside null null,
+column-count -moz-column-count null -webkit-column-count null null,
+column-fill -moz-column-fill null -webkit-column-fill null null,
+column-gap -moz-column-gap null -webkit-column-gap null null,
+column-rule -moz-column-rule null -webkit-column-rule null null,
+column-rule-color -moz-column-rule-color null -webkit-column-rule-color null null,
+column-rule-style -moz-column-rule-style null -webkit-column-rule-style null null,
+column-rule-width -moz-column-rule-width null -webkit-column-rule-width null null,
+column-span -moz-column-span null -webkit-column-span null null,
+columns -moz-columns null -webkit-columns null null,
+font-feature-settings -moz-font-feature-settings null -webkit-font-feature-settings null null,
+font-kerning -moz-font-kerning null -webkit-font-kerning null null,
+font-language-override -moz-font-language-override null -webkit-font-language-override null null,
+font-variant-ligatures -moz-font-variant-ligatures null -webkit-font-variant-ligatures null null,
+hyphens -moz-hyphens null -webkit-hyphens -ms-hyphens null,
+perspective -moz-perspective null -webkit-perspective -ms-perspective -o-perspective,
+perspective-origin -moz-perspective-origin null -webkit-perspective-origin -ms-perspective-origin -o-perspective-origin,
+tab-size -moz-tab-size null null -ms-tab-size -o-tab-size,
+transform null null -webkit-transform -ms-transform -o-transform,
+transform-origin null null -webkit-transform-origin -ms-transform-origin -o-transform-origin,
+transform-style null null -webkit-transform-style -ms-transform-style -o-transform-style,
+transition null null -webkit-transition null -o-transition,
+transition-property null null -webkit-transition-property null -o-transition-property,
+transition-timing-function null null -webkit-transition-timing-function null -o-transition-timing-function;
+
+// Nested css values list by web browser
+$prefixer-value-list:
+flex -moz-flex -webkit-flex null null null,
+transform null -webkit-transform null null null;
+
+
+
+// Mixins
+
+// Checks if the first item of each nested list is equal to the target
+// and if so returns the complete list, if the target is not in the list
+// the function returns a null value
+@function prefixer-search-in-list ($target, $list) {
+    @each $item in $list {
+        @if (nth($item, 1)) == $target {
+            @return $item
+        }
+    }
+    @return null;
+}
+
+
+// Mixin to add vendor prefixes
+@mixin prefix-property ($wbrowser, $propty, $val, $value) {
+    // This variable stores for each web browser the position of its vendor prefixed property
+    $i: (index($wbrowser-list, $wbrowser) + 1);
+
+    // Check each item in $prefixer-web-browsers-support to obtain supported web browsers
+    @each $item in $prefixer-web-browsers-support {
+        // Check if the web browser is supported and if the property for this browser in $preffixer-property-list is not null
+        @if ($item == $wbrowser or $item == all) and nth(($propty), $i) != null {
+
+            // If $val has some value stored this conditional statement returns
+            // the prefixed property and the prefixed value for the specified browser
+            @if $val != null {
+                #{nth($propty, $i)}: nth($val, $i);
+            }
+
+            // If $val == null returns the prefixed property and the default value
+            @else {
+                #{nth($propty, $i)}: #{$value};
+            }
+        }
+    }
+}
+
+// Mixin to prefix values
+@mixin prefix-value ($wbrowser, $propty, $val, $property) {
+    // This variable stores for each web browser the position of its vendor prefixed value
+    $i: index($wbrowser-list, $wbrowser) + 1;
+
+    // Check each item in $prefixer-web-browsers-support to obtain supported web browsers
+    @each $item in $prefixer-web-browsers-support {
+        // Check if the web browser is supported and if the value for this browser in $preffixer-property-list is not null
+        @if ($item == $wbrowser or $item == all) and nth($val, $i) != null {
+            // Returns the default property and a prefixed value for the specified web browser
+            #{$property}: #{nth($val, $i)};
+        }
+    }
+}
+
+
+// Prefix mixin
+// It stores the property and value that receive and returns them with
+// prefixed for the specified supported web browsers
+// <property> : a css property like border, display, font-size...
+// <value>: A css value or a list of values like #fff or 1px solid #000
+@mixin prefix($property, $value) {
+
+    // Stores in $val variable the list of properties for each web browser
+    // according to the received $property parameter
+    $propty: prefixer-search-in-list($property, $prefixer-property-list);
+
+    // Stores in $val variable the list of values for each web browser
+    // according to the received $value parameter
+    $val: prefixer-search-in-list($value, $prefixer-value-list);
+
+    // If the property has any vendor prefix for
+    @if $propty != null {
+        @each $wbrowser in $wbrowser-list {
+            @include prefix-property ($wbrowser, $propty, $val, $value);
+        }
+    }
+    // If $property isn't included in $prefixer-property-list
+    // the mixin tries to search if $value is included in
+    // $prefixer-value-list and if its a specific web browser value for it
+    @else if $val != null {
+        @each $wbrowser in $wbrowser-list {
+            @include prefix-value ($wbrowser, $propty, $val, $property);
+        }
+    }
+
+    // Returns default attribute and value
+    #{$property}: #{$value};
+}

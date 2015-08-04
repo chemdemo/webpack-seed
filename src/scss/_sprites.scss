@@ -1,0 +1,48 @@
+// @see http://compass-style.org/help/tutorials/spriting/
+// @see http://compass-style.org/reference/compass/helpers/sprites/
+// @see http://compass-style.org/reference/compass/utilities/sprites/base/
+// @see http://www.w3cplus.com/preprocessor/compass-image-sprite.html
+
+$supported-browsers: ("android", "android-chrome", "chrome", "ios-safari", "safari");
+@import "compass/support";
+
+// @see => https://github.com/AdamBrodzinski/Retina-Sprites-for-Compass
+@import "compass/utilities/sprites";
+@import "compass/css3/background-size";
+
+// Customization Options
+// @see https://github.com/Compass/compass/blob/stable/lib/compass/sprite_importer/content.erb
+$icons-dimensions: true;
+$icons-prefix: icon;
+$icons-resize-percentage: 50;
+// $icons-layout: smart;
+$icons-spacing: 2;
+
+// @see http://stackoverflow.com/questions/14135256/how-to-create-a-sprite-from-a-folder-with-and-without-background-size-using-com
+@mixin resize-sprite($map, $sprite, $percent) {
+    $spritePath:    sprite-path($map);
+    $spriteWidth:   image-width($spritePath);
+    $spriteHeight:  image-height($spritePath);
+    $width: image-width(sprite-file($map, $sprite));
+    $height: image-height(sprite-file($map, $sprite));
+
+    // @include background-size(ceil($spriteWidth * ($percent/100)) ceil($spriteHeight * ($percent/100)))
+    -webkit-background-size: ceil($spriteWidth * ($percent/100)) ceil($spriteHeight * ($percent/100));
+    background-size: ceil($spriteWidth * ($percent/100)) ceil($spriteHeight * ($percent/100));
+    width: ceil($width*($percent/100));
+    height: ceil($height*($percent/100));
+    // just for vertical layout
+    background-position: 0 ceil(nth(sprite-position($map, $sprite), 2)  * ($percent/100));
+}
+
+// icons settings end!
+
+$i-brand-spacing: $icons-spacing;
+@import "icons/*.png";
+@include all-icons-sprites($icons-dimensions, $icons-prefix);
+
+@each $sprite in sprite_names($icons-sprites) {
+    .icon-#{$sprite} {
+        @include resize-sprite($icons-sprites, $sprite, $icons-resize-percentage);
+    }
+}

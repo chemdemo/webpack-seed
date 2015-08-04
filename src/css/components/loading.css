@@ -1,0 +1,57 @@
+.loading {
+  display: inline-block;
+  vertical-align: middle;
+  width: .4rem;
+  height: .4rem;
+  background-image: url(../../img/loading.png);
+  background-size: 4.8rem .8rem;
+  background-position-x: 0;
+  background-position-y: 0;
+  -webkit-animation-name: anim_loading;
+  animation-name: anim_loading;
+  -webkit-animation-duration: 1600ms;
+  animation-duration: 1600ms;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-timing-function: step-start;
+  animation-timing-function: step-start;
+}
+
+@-webkit-keyframes anim_loading {
+  0% {
+    background-position-x: 0;
+  }
+  8.33% {
+    background-position-x: -20px;
+  }
+  16.67% {
+    background-position-x: -40px;
+  }
+  25% {
+    background-position-x: -60px;
+  }
+  33.33% {
+    background-position-x: -80px;
+  }
+  41.67% {
+    background-position-x: -100px;
+  }
+  50% {
+    background-position-x: -120px;
+  }
+  58.33% {
+    background-position-x: -140px;
+  }
+  66.67% {
+    background-position-x: -160px;
+  }
+  75% {
+    background-position-x: -180px;
+  }
+  83.33% {
+    background-position-x: -200px;
+  }
+  91.67% {
+    background-position-x: -220px;
+  }
+}
