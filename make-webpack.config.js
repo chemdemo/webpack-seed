@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-05 03:40:36
+* @Last Modified time: 2015-08-12 00:34:44
 */
 
 'use strict';
@@ -27,7 +27,7 @@ var assets = 'assets/';
 var sourceMap = require('./src/sourcemap.json');
 
 var excludeFromStats = [
-    /node_modules[\\\/]items-store[\\\/]/
+    /node_modules[\\\/]/
 ];
 
 function makeConf(options) {
@@ -45,7 +45,7 @@ function makeConf(options) {
             filename: debug ? '[name].js' : 'js/[chunkhash:8].[name].min.js',
             chunkFilename: debug ? '[chunkhash:8].chunk.js' : 'js/[chunkhash:8].chunk.min.js',
             hotUpdateChunkFilename: debug ?'[id].[chunkhash:8].js' : 'js/[id].[chunkhash:8].min.js',
-            publicPath: ''
+            publicPath: debug ? '/__build/' : ''
         },
 
         resolve: {
@@ -135,6 +135,11 @@ function makeConf(options) {
                 // @see https://github.com/kangax/html-minifier
                 var conf = {
                     template: path.resolve(srcDir, filename),
+                    // @see https://github.com/kangax/html-minifier
+                    // minify: {
+                    //     collapseWhitespace: true,
+                    //     removeComments: true
+                    // },
                     filename: filename
                 };
 
