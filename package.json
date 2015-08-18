@@ -3,7 +3,9 @@
   "description": "Frontend engineering solution based on webpack.",
   "version": "0.1.0",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "webpack": "^1.10.0"
+  },
   "devDependencies": {
     "colors": "^1.1.2",
     "css-loader": "^0.15.6",
@@ -36,9 +38,9 @@
     "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
-    "dev": "node-dev app",
-    "assets": "NODE_ENV=prduction node app",
-    "build": "gulp"
+    "start": "node-dev app",
+    "build": "gulp",
+    "assets": "NODE_ENV=prduction node app"
   },
   "licence": "MIT"
 }
