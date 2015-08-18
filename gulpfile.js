@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-06-16 15:19:59
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-18 19:43:54
+* @Last Modified time: 2015-08-18 20:47:39
 */
 
 'use strict';
@@ -18,7 +18,19 @@ var webpackDevConf = require('./webpack-dev.config');
 var src = process.cwd() + '/src';
 var assets = process.cwd() + '/assets';
 
-gulp.task('clean', function() {
+gulp.task('hint', function() {
+    var jshint = require('gulp-jshint');
+    var stylish = require('jshint-stylish');
+
+    return gulp.src([
+            '!' + src + '/js/lib/**/*.js',
+            src + '/js/**/*.js'
+        ])
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish));
+});
+
+gulp.task('clean', ['hint'], function() {
     var clean = require('gulp-clean');
 
     return gulp.src(assets, {read: true}).pipe(clean());
