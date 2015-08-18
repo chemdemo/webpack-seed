@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-12 00:34:44
+* @Last Modified time: 2015-08-18 20:03:35
 */
 
 'use strict';
@@ -104,16 +104,26 @@ function makeConf(options) {
             test: /\.css$/,
             loader: 'style!css'
         };
+        var sassLoader = {
+            test: /\.scss$/,
+            loader: 'style!css!sass'
+        };
 
         config.module.loaders.push(cssLoader);
+        config.module.loaders.push(sassLoader);
     } else {
         // 编译阶段，css分离出来单独引入
         var cssLoader = {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('style', 'css?minimize') // enable minimize
         };
+        var sassLoader = {
+            test: /\.scss$/,
+            loader: ExtractTextPlugin.extract('style', 'css?minimize', 'sass')
+        };
 
         config.module.loaders.push(cssLoader);
+        config.module.loaders.push(sassLoader);
         config.plugins.push(
             new ExtractTextPlugin('css/[contenthash:8].[name].min.css', {
                 // 当allChunks指定为false时，css loader必须指定怎么处理
