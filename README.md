@@ -80,6 +80,21 @@ $ npm run build
 $ npm run assets
 ```
 
+### 部署&发布
+
+纯静态页面型的应用，最简单的做法是直接把`assets`文件夹部署到指定机器即可。
+
+如果需要将生成的js、css、图片等发布到cdn，修改下`publicPath`项为目标cdn地址即可：
+
+``` js
+...
+output: {
+  ...
+  publicPath: debug ? '/__build/' : 'http://cdn.site.com/'
+}
+...
+```
+
 ### License
 
 MIT.
