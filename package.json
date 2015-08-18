@@ -8,7 +8,9 @@
     "build": "gulp",
     "assets": "NODE_ENV=prduction node app"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^3.10.1"
+  },
   "devDependencies": {
     "colors": "^1.1.2",
     "css-loader": "^0.15.6",
