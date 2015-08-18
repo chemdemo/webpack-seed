@@ -1,6 +1,6 @@
-@import "variables";
-@import "prefixer";
-@import "mixins";
+@import "../_variables";
+@import "../_prefixer";
+@import "../_mixins";
 
 .loading {
     @include inline-block(middle);

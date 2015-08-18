@@ -9,9 +9,7 @@ css_dir = "src/css"
 sass_dir = "src/scss"
 
 images_dir = "src/img"
-# generated_images_dir = "src/css/img"
 generated_images_dir = "src/img"
-# javascripts_dir = "javascripts"
 
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed
@@ -53,9 +51,3 @@ module Compass
     end
   end
 end
-
-# If you prefer the indented syntax, you might want to regenerate this
-# project again passing --syntax sass, or you can uncomment this:
-# preferred_syntax = :sass
-# and then run:
-# sass-convert -R --from scss --to sass sass scss && rm -rf sass && mv scss sass

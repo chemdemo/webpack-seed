@@ -2,12 +2,12 @@
 * @Author: dm.yang
 * @Date:   2015-03-10 16:15:27
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-05 01:38:47
+* @Last Modified time: 2015-08-18 19:02:15
 */
 
 'use strict';
 
-require('../../css/components/dialog.css');
+require('../../scss/components/dialog.scss');
 
 console.info('require dialog module.');
 

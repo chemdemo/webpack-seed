@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2015-08-05 00:54:19
+ * @Last Modified time: 2015-08-18 12:05:06
  */
 
 'use strict';
@@ -77,7 +77,11 @@ if(debug) {
         contentBase: webpackDevConf.output.path,
         publicPath: webpackDevConf.output.publicPath,
         hot: true,
-        stats: webpackDevConf.devServer.stats
+        // stats: webpackDevConf.devServer.stats
+        stats: {
+            cached: false,
+            colors: true
+        }
     }));
 }
 
@@ -88,6 +92,6 @@ app.use(serve(path.resolve(__dirname, viewDir), {
 
 app = http.createServer(app.callback());
 
-app.listen(8080, '0.0.0.0', function() {
+app.listen(3005, '0.0.0.0', function() {
     console.log('app listen success.');
 });

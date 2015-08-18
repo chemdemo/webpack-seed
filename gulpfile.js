@@ -2,26 +2,25 @@
 * @Author: dmyang
 * @Date:   2015-06-16 15:19:59
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-04 19:02:09
+* @Last Modified time: 2015-08-18 19:43:54
 */
 
 'use strict';
 
 var gulp = require('gulp');
 var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
+
 var gutil = require('gulp-util');
-var replace = require('gulp-replace');
-var htmlmin = require('gulp-htmlmin');
-var clean = require('gulp-clean');
 
 var webpackConf = require('./webpack.config');
 var webpackDevConf = require('./webpack-dev.config');
 
-var src = './src';
-var assets = './assets';
+var src = process.cwd() + '/src';
+var assets = process.cwd() + '/assets';
 
 gulp.task('clean', function() {
+    var clean = require('gulp-clean');
+
     return gulp.src(assets, {read: true}).pipe(clean());
 });
 
@@ -34,6 +33,9 @@ gulp.task('pack', ['clean'], function(done) {
 });
 
 gulp.task('default', ['pack'], function() {
+    var replace = require('gulp-replace');
+    var htmlmin = require('gulp-htmlmin');
+
     return gulp
         .src(assets + '/*.html')
         .pipe(replace(/<script(.+)?data-debug([^>]+)?><\/script>/g, ''))
@@ -47,6 +49,7 @@ gulp.task('default', ['pack'], function() {
 
 // @see http://webpack.github.io/docs/webpack-dev-server.html
 gulp.task('hmr', function(done) {
+    var WebpackDevServer = require('webpack-dev-server');
     var compiler = webpack(webpackDevConf);
     var devSvr = new WebpackDevServer(compiler, {
         contentBase: webpackConf.output.path,
