@@ -9,13 +9,19 @@
 
 - compass（非必须）：v1.0+
 
+### 拷贝项目模板
+
+``` bash
+$ clone https://github.com/chemdemo/webpack-bootstrap.git
+```
+
 
 ### 安装依赖模块
 
 ``` bash
-$ clone https://github.com/chemdemo/webpack-bootstrap.git && cd webpack-bootstrap
-$ npm install
+$ npm install -g gulp webpack
 $ npm install -g node-dev # 推荐这个工具，代码改动会自动重启node进程
+$ cd webpack-bootstrap && npm install
 ```
 
 ### 本地开发环境
