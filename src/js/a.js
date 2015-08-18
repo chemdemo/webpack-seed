@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-05 00:25:43
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-18 20:06:10
+* @Last Modified time: 2015-08-18 21:14:59
 */
 
 'use strict';
@@ -14,7 +14,8 @@ require('../css/a.css');
 
 require('zepto');
 
-var _ = require('underscore');
+// 直接使用npm模块
+var _ = require('lodash');
 
 var url = require('./utils/url');
 var report = require('./helpers/report');
@@ -41,6 +42,7 @@ if('toast' === component) {
 
 require.ensure([], function() {
     var ajax = require('./helpers/ajax');
+    var t = _.now();
 
     ajax.request({
         url: '/api/list',
@@ -51,6 +53,8 @@ require.ensure([], function() {
     }).done(function(data) {
         var template = require('../tmpl/list.tpl');
         var html = template({list: data || []});
+
+        console.info('ajax took %d ms.', _.now() - t);
 
         $('#list').html(html);
     });

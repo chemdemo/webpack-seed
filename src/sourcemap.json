@@ -1,6 +1,5 @@
 {
     "zepto": "js/lib/zepto",
-    "underscore": "js/lib/underscore",
 
     "commonCss": "css/common.css",
 
