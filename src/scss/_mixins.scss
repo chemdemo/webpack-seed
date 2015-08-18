@@ -1,5 +1,5 @@
-@import "variables";
-@import "prefixer";
+@import "./_variables";
+@import "./_prefixer";
 
 @mixin clearfix {
     content: ' ';
