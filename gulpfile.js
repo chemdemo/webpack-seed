@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-06-16 15:19:59
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-27 11:01:47
+* @Last Modified time: 2015-08-27 11:11:03
 */
 
 'use strict';
@@ -61,6 +61,19 @@ gulp.task('default', ['pack'], function() {
             removeComments: true
         }))
         .pipe(gulp.dest(assets));
+});
+
+// deploy assets to remote server
+gulp.task('deploy', function() {
+    var sftp = require('gulp-sftp');
+
+    return gulp.src(assets + '/**')
+        .pipe(sftp({
+            host: '192.168.42.14',
+            remotePath: '/www/app/',
+            user: 'root',
+            pass: 'vipshop12300'
+        }));
 });
 
 // run HMR on `cli` mode

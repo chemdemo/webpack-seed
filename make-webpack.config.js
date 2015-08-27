@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-18 20:03:35
+* @Last Modified time: 2015-08-20 02:20:55
 */
 
 'use strict';
@@ -49,7 +49,7 @@ function makeConf(options) {
         },
 
         resolve: {
-            root: [srcDir],
+            root: [srcDir, './node_modules'],
             alias: sourceMap,
             extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
         },
