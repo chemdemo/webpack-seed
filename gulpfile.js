@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-06-16 15:19:59
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-27 11:11:03
+* @Last Modified time: 2015-08-27 11:16:12
 */
 
 'use strict';
@@ -69,10 +69,10 @@ gulp.task('deploy', function() {
 
     return gulp.src(assets + '/**')
         .pipe(sftp({
-            host: '192.168.42.14',
+            host: '[remote server ip]',
             remotePath: '/www/app/',
-            user: 'root',
-            pass: 'vipshop12300'
+            user: 'foo',
+            pass: 'bar'
         }));
 });
 
