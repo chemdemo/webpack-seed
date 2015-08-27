@@ -88,7 +88,11 @@ $ npm run assets
 
 ### 部署&发布
 
-纯静态页面型的应用，最简单的做法是直接把`assets`文件夹部署到指定机器即可。
+纯静态页面型的应用，最简单的做法是直接把`assets`文件夹部署到指定机器即可（先配置好机器ip、密码、上传路径等信息）：
+
+``` js
+$ npm run deploy # or run `gulp deploy`
+```
 
 如果需要将生成的js、css、图片等发布到cdn，修改下`publicPath`项为目标cdn地址即可：
 
