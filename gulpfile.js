@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-06-16 15:19:59
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-18 20:47:39
+* @Last Modified time: 2015-08-27 11:01:47
 */
 
 'use strict';
@@ -18,6 +18,7 @@ var webpackDevConf = require('./webpack-dev.config');
 var src = process.cwd() + '/src';
 var assets = process.cwd() + '/assets';
 
+// js check
 gulp.task('hint', function() {
     var jshint = require('gulp-jshint');
     var stylish = require('jshint-stylish');
@@ -30,12 +31,14 @@ gulp.task('hint', function() {
         .pipe(jshint.reporter(stylish));
 });
 
+// clean assets
 gulp.task('clean', ['hint'], function() {
     var clean = require('gulp-clean');
 
     return gulp.src(assets, {read: true}).pipe(clean());
 });
 
+// run webpack pack
 gulp.task('pack', ['clean'], function(done) {
     webpack(webpackConf, function(err, stats) {
         if(err) throw new gutil.PluginError('webpack', err);
@@ -44,6 +47,7 @@ gulp.task('pack', ['clean'], function(done) {
     });
 });
 
+// html process
 gulp.task('default', ['pack'], function() {
     var replace = require('gulp-replace');
     var htmlmin = require('gulp-htmlmin');
@@ -59,6 +63,7 @@ gulp.task('default', ['pack'], function() {
         .pipe(gulp.dest(assets));
 });
 
+// run HMR on `cli` mode
 // @see http://webpack.github.io/docs/webpack-dev-server.html
 gulp.task('hmr', function(done) {
     var WebpackDevServer = require('webpack-dev-server');
