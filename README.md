@@ -5,7 +5,7 @@
 
 ### 安装软件
 
-- iojs：v2.0+
+- Node.js：v4.0+
 
 - compass（非必须）：v1.0+
 
