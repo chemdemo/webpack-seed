@@ -35,6 +35,7 @@
     "koa-proxy": "^0.3.0",
     "koa-rewrite": "1.1.0",
     "koa-router": "^5.1.2",
+    "koa-send": "^1.3.1",
     "koa-static": "^1.4.9",
     "koa-webpack-dev-middleware": "^1.0.1",
     "lodash": "^3.10.0",

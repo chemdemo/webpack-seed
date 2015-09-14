@@ -2,12 +2,12 @@
 * @Author: dmyang
 * @Date:   2015-08-05 00:25:43
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-18 21:14:59
+* @Last Modified time: 2015-08-31 21:19:49
 */
 
 'use strict';
 
-console.info('require module a.');
+console.info('require page a.');
 
 require('commonCss');
 require('../css/a.css');

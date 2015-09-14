@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-20 02:20:55
+* @Last Modified time: 2015-09-14 15:08:13
 */
 
 'use strict';
@@ -86,6 +86,11 @@ function makeConf(options) {
                 chunks: chunks,
                 // Modules must be shared between all entries
                 minChunks: chunks.length // 提取所有chunks共同依赖的模块
+            }),
+            new CommonsChunkPlugin({
+                name: 'common-bc',
+                chunks: ['vendors', 'b', 'c'],
+                minChunks: 2
             })
         ],
 
@@ -162,7 +167,7 @@ function makeConf(options) {
             }
         });
 
-        config.plugins.push(new UglifyJsPlugin());
+        // config.plugins.push(new UglifyJsPlugin());
     }
 
     return config;

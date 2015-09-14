@@ -1,16 +1,15 @@
 /*
 * @Author: dmyang
-* @Date:   2015-08-05 00:35:47
+* @Date:   2015-08-31 21:17:45
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-09-14 14:55:52
+* @Last Modified time: 2015-09-14 14:54:37
 */
 
 'use strict';
 
-console.info('require page b.');
+console.info('require page c.');
 
 require('commonCss');
-require('../css/b.css');
 
 require('zepto');
 
@@ -19,3 +18,4 @@ var _ = require('lodash');
 
 var report = require('./helpers/report');
 var bar = require('./helpers/bar');
+var url = require('./utils/url');

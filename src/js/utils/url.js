@@ -2,10 +2,12 @@
 * @Author: dm.yang
 * @Date:   2015-01-15 15:06:38
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-03 18:34:59
+* @Last Modified time: 2015-08-31 21:31:18
 */
 
 'use strict';
+
+console.info('require url module');
 
 exports.getPageName = getPageName;
 exports.getQuery = getQuery;
