@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node-dev app",
     "build": "gulp",
-    "assets": "NODE_ENV=prduction node app",
+    "release": "NODE_ENV=prduction node app",
     "deploy": "gulp deploy"
   },
   "dependencies": {

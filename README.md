@@ -83,7 +83,7 @@ $ npm run build
 ### 模拟生产环境
 
 ``` bash
-$ npm run assets
+$ npm run release
 ```
 
 ### 部署&发布
