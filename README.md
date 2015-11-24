@@ -12,7 +12,7 @@
 ### 拷贝项目模板
 
 ``` bash
-$ clone https://github.com/chemdemo/webpack-bootstrap.git
+$ git clone https://github.com/chemdemo/webpack-bootstrap.git
 ```
 
 
