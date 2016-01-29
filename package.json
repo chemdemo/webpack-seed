@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "main": "app.js",
   "scripts": {
-    "start": "node-dev app",
+    "start": "node app",
     "build": "gulp",
     "release": "NODE_ENV=prduction node app",
     "deploy": "gulp deploy"
@@ -27,7 +27,6 @@
     "gulp-util": "^3.0.6",
     "html-webpack-plugin": "^1.6.0",
     "image-webpack-loader": "^1.6.1",
-    "imagemin": "^3.2.0",
     "jshint-stylish": "^2.0.1",
     "jsx-loader": "^0.13.2",
     "koa": "^0.21.0",
