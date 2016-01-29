@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-09-14 15:08:13
+* @Last Modified time: 2016-01-29 18:32:37
 */
 
 'use strict';
@@ -25,10 +25,6 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 var srcDir = path.resolve(process.cwd(), 'src');
 var assets = 'assets/';
 var sourceMap = require('./src/sourcemap.json');
-
-var excludeFromStats = [
-    /node_modules[\\\/]/
-];
 
 function makeConf(options) {
     options = options || {};
@@ -83,9 +79,7 @@ function makeConf(options) {
         plugins: [
             new CommonsChunkPlugin({
                 name: 'vendors',
-                chunks: chunks,
-                // Modules must be shared between all entries
-                minChunks: chunks.length // 提取所有chunks共同依赖的模块
+                chunks: chunks
             }),
             new CommonsChunkPlugin({
                 name: 'common-bc',
@@ -97,7 +91,6 @@ function makeConf(options) {
         devServer: {
             stats: {
                 cached: false,
-                exclude: excludeFromStats,
                 colors: true
             }
         }

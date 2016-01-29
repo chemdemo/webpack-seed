@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
+    "start-dev": "node app",
     "build": "gulp",
-    "release": "NODE_ENV=prduction node app",
+    "start-release": "NODE_ENV=prduction node app",
     "deploy": "gulp deploy"
   },
   "dependencies": {
