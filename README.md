@@ -36,7 +36,7 @@ $ cd webpack-bootstrap && npm install
 - 启动本地开发服务器
 
     ``` bash
-    $ npm run start
+    $ npm run start-dev
     ```
     浏览器打开`http://localhost:3005/a.html`即可访问。
 
@@ -83,7 +83,7 @@ $ npm run build
 ### 模拟生产环境
 
 ``` bash
-$ npm run release
+$ npm run start-release
 ```
 
 ### 部署&发布
