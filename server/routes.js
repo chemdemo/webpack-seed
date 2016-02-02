@@ -2,16 +2,19 @@
 * @Author: dmyang
 * @Date:   2015-07-31 11:41:38
 * @Last Modified by:   dmyang
-* @Last Modified time: 2015-08-05 03:45:03
+* @Last Modified time: 2016-02-02 11:08:44
 */
 
 'use strict';
 
+var fs = require('fs');
+
+var render = require('koa-ejs');
 var proxy = require('koa-proxy');
 
-var list = require('./mock/list');
+var list = require('../mock/list');
 
-module.exports = function(router, app) {
+module.exports = function(router, app, staticDir) {
     // mock api
     router.get('/api/list', function*() {
         var query = this.query || {};
@@ -33,4 +36,22 @@ module.exports = function(router, app) {
 
     // proxy api
     router.get('/api/foo/bar', proxy({url: 'http://foo.bar.com'}));
+
+    render(app, {
+        root: __dirname,
+        layout: false,
+        viewExt: 'html',
+        cache: false,
+        debug: true
+    });
+
+    router.get('/', function*() {
+        var pages = fs.readdirSync(staticDir);
+
+        pages = pages.filter(function(page) {
+            return /\.html$/.test(page);
+        });
+
+        yield this.render('home', {pages: pages || []});
+    });
 };

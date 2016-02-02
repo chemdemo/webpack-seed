@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2015-09-06 15:45:46
+ * @Last Modified time: 2016-02-02 11:22:00
  */
 
 'use strict';
@@ -10,18 +10,21 @@
 // load native modules
 var http = require('http');
 var path = require('path');
+var util = require('util');
 
 // load 3rd modules
 var koa = require('koa');
 var router = require('koa-router')();
 var serve = require('koa-static');
 var colors = require('colors');
+var open = require('open');
 
 // load local modules
-var pkg = require('./package.json');
+var pkg = require('../package.json');
 var env = process.env.NODE_ENV;
 var debug = !env || env === 'development';
 var viewDir = debug ? 'src' : 'assets';
+var staticDir = path.resolve(__dirname, '../' + (debug ? 'src' : 'assets'));
 
 // load routes
 var routes = require('./routes');
@@ -65,13 +68,13 @@ app.use(function*(next) {
 });
 
 // use routes
-routes(router, app);
+routes(router, app, staticDir);
 app.use(router.routes());
 
 if(debug) {
     var webpackDevMiddleware = require('koa-webpack-dev-middleware');
     var webpack = require('webpack');
-    var webpackDevConf = require('./webpack-dev.config');
+    var webpackDevConf = require('../webpack-dev.config');
 
     app.use(webpackDevMiddleware(webpack(webpackDevConf), {
         contentBase: webpackDevConf.output.path,
@@ -86,12 +89,16 @@ if(debug) {
 }
 
 // handle static files
-app.use(serve(path.resolve(__dirname, viewDir), {
+app.use(serve(staticDir, {
     maxage: 0
 }));
 
 app = http.createServer(app.callback());
 
 app.listen(3005, '0.0.0.0', function() {
-    console.log('app listen success.');
+    var url = util.format('http://%s:%d', 'localhost', 3005);
+
+    console.log('Listening at %s', url);
+
+    // open(url);
 });
