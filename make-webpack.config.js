@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-01-29 18:32:37
+* @Last Modified time: 2016-02-02 11:34:05
 */
 
 'use strict';
@@ -23,6 +23,8 @@ var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 
 var srcDir = path.resolve(process.cwd(), 'src');
+var nodeModPath = path.resolve(__dirname, './node_modules');
+var build = '__build';
 var assets = 'assets/';
 var sourceMap = require('./src/sourcemap.json');
 
@@ -33,14 +35,16 @@ function makeConf(options) {
     var entries = genEntries();
     var chunks = Object.keys(entries);
     var config = {
-        entry: entries,
+        entry: Object.assign(entries, {
+            'vender': ['zepto']
+        }),
 
         output: {
             // 在debug模式下，__build目录是虚拟的，webpack的dev server存储在内存里
-            path: path.resolve(debug ? '__build' : assets),
+            path: path.resolve(assets),
             filename: debug ? '[name].js' : 'js/[chunkhash:8].[name].min.js',
-            chunkFilename: debug ? '[chunkhash:8].chunk.js' : 'js/[chunkhash:8].chunk.min.js',
-            hotUpdateChunkFilename: debug ?'[id].[chunkhash:8].js' : 'js/[id].[chunkhash:8].min.js',
+            chunkFilename: debug ? 'chunk.js' : 'js/[chunkhash:8].chunk.min.js',
+            hotUpdateChunkFilename: debug ? '[id].js' : 'js/[id].[chunkhash:8].min.js',
             publicPath: debug ? '/__build/' : ''
         },
 
@@ -55,7 +59,6 @@ function makeConf(options) {
         },
 
         module: {
-            noParse: ['zepto'],
             loaders: [
                 {
                     test: /\.(jpe?g|png|gif|svg)$/i,
@@ -72,19 +75,22 @@ function makeConf(options) {
                     loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
                 },
                 {test: /\.(tpl|ejs)$/, loader: 'ejs'},
-                {test: /\.js$/, exclude: /node_modules/, loader: 'jsx'}
+                {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel?presets[]=react,presets[]=es2015'}
             ]
         },
 
         plugins: [
             new CommonsChunkPlugin({
-                name: 'vendors',
-                chunks: chunks
+                name: 'common-b-c',
+                chunks: ['b', 'c']
             }),
             new CommonsChunkPlugin({
-                name: 'common-bc',
-                chunks: ['vendors', 'b', 'c'],
-                minChunks: 2
+                name: 'common',
+                chunks: ['common-b-c', 'a']
+            }),
+            new CommonsChunkPlugin({
+                name: 'vender',
+                chunks: ['common']
             })
         ],
 
@@ -132,35 +138,39 @@ function makeConf(options) {
             })
         );
 
-        // 自动生成入口文件，入口js名必须和入口文件名相同
-        // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
-        var pages = fs.readdirSync(srcDir);
+        // genHtml
+        (function() {
+            // 自动生成入口文件，入口js名必须和入口文件名相同
+            // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
+            var pages = fs.readdirSync(srcDir);
 
-        pages.forEach(function(filename) {
-            var m = filename.match(/(.+)\.html$/);
+            pages.forEach(function(filename) {
+                var m = filename.match(/(.+)\.html$/);
 
-            if(m) {
-                // @see https://github.com/kangax/html-minifier
-                var conf = {
-                    template: path.resolve(srcDir, filename),
+                if(m) {
                     // @see https://github.com/kangax/html-minifier
-                    // minify: {
-                    //     collapseWhitespace: true,
-                    //     removeComments: true
-                    // },
-                    filename: filename
-                };
+                    var conf = {
+                        template: path.resolve(srcDir, filename),
+                        // @see https://github.com/kangax/html-minifier
+                        // minify: {
+                        //     collapseWhitespace: true,
+                        //     removeComments: true
+                        // },
+                        filename: filename
+                    };
+                    var mod = m[1];
 
-                if(m[1] in config.entry) {
-                    conf.inject = 'body';
-                    conf.chunks = ['vendors', m[1]];
+                    if(mod in entries) {
+                        conf.inject = 'body';
+                        conf.chunks = ['vender', 'common', mod];
+                    }
+
+                    config.plugins.push(new HtmlWebpackPlugin(conf));
                 }
+            });
+        }());
 
-                config.plugins.push(new HtmlWebpackPlugin(conf));
-            }
-        });
-
-        // config.plugins.push(new UglifyJsPlugin());
+        config.plugins.push(new UglifyJsPlugin());
     }
 
     return config;
