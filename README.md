@@ -5,9 +5,10 @@
 
 ### 安装软件
 
-- Node.js：v4.0+
+- Node.js：v5.0+
 
 - compass（非必须）：v1.0+
+
 
 ### 拷贝项目模板
 
@@ -38,7 +39,6 @@ $ cd webpack-bootstrap && npm install
     ``` bash
     $ npm run start-dev
     ```
-    浏览器打开`http://localhost:3005/a.html`即可访问。
 
 ### 业务开发
 
@@ -56,8 +56,10 @@ $ cd webpack-bootstrap && npm install
     b.html                 # 入口文件b
   + assets/                # 编译输出目录
   + mock/                  # 假数据文件
-  app.js                   # 本地server入口
-  routes.js                # 本地路由配置
+  - server/                # 本地server
+    app.js                 # 本地server入口
+    routes.js              # 本地路由配置
+    home.html              # 列出项目所有入口文件
   webpack.config.js        # webpack配置文件
   webpack-dev.config.js    # 开发环境webpack配置文件
   gulpfile.js              # gulp任务配置
