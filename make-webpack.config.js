@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-02-02 11:34:05
+* @Last Modified time: 2016-02-03 12:06:55
 */
 
 'use strict';
@@ -139,36 +139,38 @@ function makeConf(options) {
         );
 
         // genHtml
-        (function() {
-            // 自动生成入口文件，入口js名必须和入口文件名相同
-            // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
-            var pages = fs.readdirSync(srcDir);
+        // 自动生成入口文件，入口js名必须和入口文件名相同
+        // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
+        var pages = fs.readdirSync(srcDir);
 
-            pages.forEach(function(filename) {
-                var m = filename.match(/(.+)\.html$/);
+        pages.forEach(function(filename) {
+            var m = filename.match(/(.+)\.html$/);
 
-                if(m) {
+            if(m) {
+                // @see https://github.com/kangax/html-minifier
+                var conf = {
+                    template: path.resolve(srcDir, filename),
                     // @see https://github.com/kangax/html-minifier
-                    var conf = {
-                        template: path.resolve(srcDir, filename),
-                        // @see https://github.com/kangax/html-minifier
-                        // minify: {
-                        //     collapseWhitespace: true,
-                        //     removeComments: true
-                        // },
-                        filename: filename
-                    };
-                    var mod = m[1];
+                    // minify: {
+                    //     collapseWhitespace: true,
+                    //     removeComments: true
+                    // },
+                    filename: filename
+                };
+                var mod = m[1];
 
-                    if(mod in entries) {
-                        conf.inject = 'body';
-                        conf.chunks = ['vender', 'common', mod];
-                    }
-
-                    config.plugins.push(new HtmlWebpackPlugin(conf));
+                if(mod in entries) {
+                    conf.inject = 'body';
+                    conf.chunks = ['vender', 'common', mod];
                 }
-            });
-        }());
+
+                if(/b|c/.test(mod)) {
+                    conf.chunks.splice(2, 0, 'common-b-c');
+                }
+
+                config.plugins.push(new HtmlWebpackPlugin(conf));
+            }
+        });
 
         config.plugins.push(new UglifyJsPlugin());
     }
