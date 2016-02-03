@@ -28,7 +28,7 @@
     "gulp-replace": "^0.5.3",
     "gulp-sftp": "^0.1.4",
     "gulp-util": "^3.0.6",
-    "html-webpack-plugin": "^1.6.0",
+    "html-webpack-plugin": "^2.7.2",
     "image-webpack-loader": "^1.6.1",
     "jshint-stylish": "^2.0.1",
     "jsx-loader": "^0.13.2",
