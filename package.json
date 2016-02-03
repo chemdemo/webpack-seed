@@ -8,6 +8,9 @@
     "start-release": "node server/app production",
     "deploy": "gulp deploy"
   },
+  "localServer": {
+    "port": 3010
+  },
   "dependencies": {
     "lodash": "^3.10.1"
   },
@@ -21,6 +24,7 @@
     "ejs-loader": "^0.2.1",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
+    "glob": "^6.0.4",
     "gulp": "^3.9.0",
     "gulp-clean": "^0.3.1",
     "gulp-htmlmin": "^1.1.3",

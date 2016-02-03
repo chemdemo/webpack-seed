@@ -14,9 +14,11 @@
     <div id="dialog" class="none dialog">dialog</div>
     <p><i class="icon-cart"></i></p>
     <p id="logo"></p>
-    <script data-debug src="/__build/vender.js"></script>
-    <script data-debug src="/__build/common.js"></script>
-    <script data-debug src="/__build/a.js"></script>
+    <% if (htmlWebpackPlugin.options.debug) { %>
+    <script src="vender.js"></script>
+    <script src="common.js"></script>
+    <script src="a.js"></script>
+    <% } %>
 </body>
 
 </html>

@@ -2,55 +2,116 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-02-03 15:52:07
+* @Last Modified time: 2016-02-03 17:12:27
 */
 
 'use strict';
 
-// @see http://christianalfoni.github.io/javascript/2014/12/13/did-you-know-webpack-and-react-is-awesome.html
-// @see https://github.com/webpack/react-starter/blob/master/make-webpack-config.js
+let path = require('path')
+let fs = require('fs')
 
-var path = require('path');
-var fs = require('fs');
+let webpack = require('webpack')
+let _ = require('lodash')
+let glob = require('glob')
 
-var webpack = require('webpack');
-var _ = require('lodash');
+let ExtractTextPlugin = require('extract-text-webpack-plugin')
+let HtmlWebpackPlugin = require('html-webpack-plugin')
 
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+let UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
+let CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
 
-var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+let srcDir = path.resolve(process.cwd(), 'src')
+let nodeModPath = path.resolve(__dirname, './node_modules')
+let assets = 'assets/'
+let pathMap = require('./src/pathmap.json')
 
-var srcDir = path.resolve(process.cwd(), 'src');
-var nodeModPath = path.resolve(__dirname, './node_modules');
-var build = '__build';
-var assets = 'assets/';
-var pathmap = require('./src/pathmap.json');
+let entries = (() => {
+    let jsDir = path.resolve(srcDir, 'js')
+    let entryFiles = glob.sync(jsDir + '/*.{js,jsx}')
+    let map = {}
 
-function makeConf(options) {
-    options = options || {};
+    entryFiles.forEach(function(filePath) {
+        let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+        map[filename] = filePath
+    })
 
-    var debug = options.debug !== undefined ? options.debug : true;
-    var entries = genEntries();
-    var chunks = Object.keys(entries);
-    var config = {
+    return map;
+}())
+let chunks = Object.keys(entries)
+
+module.exports = (options) => {
+    options = options || {}
+
+    let debug = options.debug !== undefined ? options.debug : true
+    let publicPath = ''
+    let cssLoader
+    let scssLoader
+
+    // generate entry html files
+    // 自动生成入口文件，入口js名必须和入口文件名相同
+    // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
+    let plugins = () => {
+        let entryHtml = glob.sync(srcDir + '/*.html')
+        let r = []
+
+        entryHtml.forEach(function(filePath) {
+            let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+            let conf = {
+                template: filePath,
+                filename: filename + '.html'
+            }
+
+            if(filename in entries) {
+                conf.inject = 'body'
+                conf.chunks = ['vender', 'common', filename]
+            }
+
+            if(/b|c/.test(filename)) conf.chunks.splice(2, 0, 'common-b-c')
+
+            r.push(new HtmlWebpackPlugin(conf))
+        })
+
+        return r
+    }()
+
+    if(debug) {
+        // 开发阶段，css直接内嵌
+        cssLoader = 'style!css'
+        scssLoader = 'style!css!sass'
+    } else {
+        // 编译阶段，css分离出来单独引入
+        cssLoader = ExtractTextPlugin.extract('style', 'css?minimize') // enable minimize
+        scssLoader = ExtractTextPlugin.extract('style', 'css?minimize', 'sass')
+
+        plugins.push(
+            new ExtractTextPlugin('css/[contenthash:8].[name].min.css', {
+                // 当allChunks指定为false时，css loader必须指定怎么处理
+                // additional chunk所依赖的css，即指定`ExtractTextPlugin.extract()`
+                // 第一个参数`notExtractLoader`，一般是使用style-loader
+                // @see https://github.com/webpack/extract-text-webpack-plugin
+                allChunks: false
+            })
+        )
+
+        plugins.push(new UglifyJsPlugin())
+    }
+
+    let config = {
         entry: Object.assign(entries, {
             'vender': ['zepto']
         }),
 
         output: {
-            // 在debug模式下，__build目录是虚拟的，webpack的dev server存储在内存里
             path: path.resolve(assets),
             filename: debug ? '[name].js' : 'js/[chunkhash:8].[name].min.js',
             chunkFilename: debug ? 'chunk.js' : 'js/[chunkhash:8].chunk.min.js',
             hotUpdateChunkFilename: debug ? '[id].js' : 'js/[id].[chunkhash:8].min.js',
-            publicPath: debug ? '/__build/' : ''
+            publicPath: publicPath
         },
 
         resolve: {
             root: [srcDir, './node_modules'],
-            alias: pathmap,
+            alias: pathMap,
             extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
         },
 
@@ -75,6 +136,8 @@ function makeConf(options) {
                     loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
                 },
                 {test: /\.(tpl|ejs)$/, loader: 'ejs'},
+                {test: /\.css$/, loader: cssLoader},
+                {test: /\.scss$/, loader: scssLoader},
                 {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel?presets[]=react,presets[]=es2015'}
             ]
         },
@@ -92,106 +155,19 @@ function makeConf(options) {
                 name: 'vender',
                 chunks: ['common']
             })
-        ],
+        ].concat(plugins),
 
         devServer: {
+            hot: true,
+            noInfo: false,
+            inline: true,
+            publicPath: publicPath,
             stats: {
                 cached: false,
                 colors: true
             }
         }
-    };
-
-    if(debug) {
-        // 开发阶段，css直接内嵌
-        var cssLoader = {
-            test: /\.css$/,
-            loader: 'style!css'
-        };
-        var sassLoader = {
-            test: /\.scss$/,
-            loader: 'style!css!sass'
-        };
-
-        config.module.loaders.push(cssLoader);
-        config.module.loaders.push(sassLoader);
-    } else {
-        // 编译阶段，css分离出来单独引入
-        var cssLoader = {
-            test: /\.css$/,
-            loader: ExtractTextPlugin.extract('style', 'css?minimize') // enable minimize
-        };
-        var sassLoader = {
-            test: /\.scss$/,
-            loader: ExtractTextPlugin.extract('style', 'css?minimize', 'sass')
-        };
-
-        config.module.loaders.push(cssLoader);
-        config.module.loaders.push(sassLoader);
-        config.plugins.push(
-            new ExtractTextPlugin('css/[contenthash:8].[name].min.css', {
-                // 当allChunks指定为false时，css loader必须指定怎么处理
-                // additional chunk所依赖的css，即指定`ExtractTextPlugin.extract()`
-                // 第一个参数`notExtractLoader`，一般是使用style-loader
-                // @see https://github.com/webpack/extract-text-webpack-plugin
-                allChunks: false
-            })
-        );
-
-        // genHtml
-        // 自动生成入口文件，入口js名必须和入口文件名相同
-        // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
-        var pages = fs.readdirSync(srcDir);
-
-        pages.forEach(function(filename) {
-            var m = filename.match(/(.+)\.html$/);
-
-            if(m) {
-                // @see https://github.com/kangax/html-minifier
-                var conf = {
-                    template: path.resolve(srcDir, filename),
-                    // @see https://github.com/kangax/html-minifier
-                    // minify: {
-                    //     collapseWhitespace: true,
-                    //     removeComments: true
-                    // },
-                    filename: filename
-                };
-                var mod = m[1];
-
-                if(mod in entries) {
-                    conf.inject = 'body';
-                    conf.chunks = ['vender', 'common', mod];
-                }
-
-                if(/b|c/.test(mod)) {
-                    conf.chunks.splice(2, 0, 'common-b-c');
-                }
-
-                config.plugins.push(new HtmlWebpackPlugin(conf));
-            }
-        });
-
-        config.plugins.push(new UglifyJsPlugin());
     }
 
-    return config;
+    return config
 }
-
-function genEntries() {
-    var jsDir = path.resolve(srcDir, 'js');
-    var names = fs.readdirSync(jsDir);
-    var map = {};
-
-    names.forEach(function(name) {
-        var m = name.match(/(.+)\.js$/);
-        var entry = m ? m[1] : '';
-        var entryPath = entry ? path.resolve(jsDir, name) : '';
-
-        if(entry) map[entry] = entryPath;
-    });
-
-    return map;
-}
-
-module.exports = makeConf;

@@ -9,10 +9,12 @@
 
 <body>
     <h1>page c</h1>
-    <script data-debug src="/__build/vender.js"></script>
-    <script data-debug src="/__build/common.js"></script>
-    <script data-debug src="/__build/common-b-c.js"></script>
-    <script data-debug src="/__build/c.js"></script>
+    <% if (htmlWebpackPlugin.options.debug) { %>
+    <script src="vender.js"></script>
+    <script src="common.js"></script>
+    <script src="common-b-c.js"></script>
+    <script src="c.js"></script>
+    <% } %>
 </body>
 
 </html>
