@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2016-02-02 11:22:00
+ * @Last Modified time: 2016-02-03 12:09:00
  */
 
 'use strict';
@@ -21,8 +21,8 @@ var open = require('open');
 
 // load local modules
 var pkg = require('../package.json');
-var env = process.env.NODE_ENV;
-var debug = !env || env === 'development';
+var env = process.argv[2] || process.env.NODE_ENV;
+var debug = 'production' !== env;
 var viewDir = debug ? 'src' : 'assets';
 var staticDir = path.resolve(__dirname, '../' + (debug ? 'src' : 'assets'));
 

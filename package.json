@@ -5,7 +5,7 @@
   "scripts": {
     "start-dev": "node server/app",
     "build": "gulp",
-    "start-release": "NODE_ENV=prduction node server/app",
+    "start-release": "node server/app production",
     "deploy": "gulp deploy"
   },
   "dependencies": {

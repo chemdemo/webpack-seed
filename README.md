@@ -27,18 +27,18 @@ $ cd webpack-bootstrap && npm install
 
 ### 本地开发环境
 
+- 启动本地开发服务器
+
+    ``` bash
+    $ npm run start-dev
+    ```
+
 - 启动compass监听
 
     ``` bash
     $ compass watch
     ```
     compass在这里主要用于生成雪碧，雪碧图生成有多种方案，不一定要用compass。如果项目没用到雪碧图，完全可以不用compass，因为`sass-loader`可以直接加载sass文件
-
-- 启动本地开发服务器
-
-    ``` bash
-    $ npm run start-dev
-    ```
 
 ### 业务开发
 
