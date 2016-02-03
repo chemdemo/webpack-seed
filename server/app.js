@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2016-02-03 12:09:00
+ * @Last Modified time: 2016-02-03 12:52:49
  */
 
 'use strict';
@@ -100,5 +100,5 @@ app.listen(3005, '0.0.0.0', function() {
 
     console.log('Listening at %s', url);
 
-    // open(url);
+    open(url);
 });
