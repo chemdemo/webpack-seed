@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-02-03 12:06:55
+* @Last Modified time: 2016-02-03 15:52:07
 */
 
 'use strict';
@@ -26,7 +26,7 @@ var srcDir = path.resolve(process.cwd(), 'src');
 var nodeModPath = path.resolve(__dirname, './node_modules');
 var build = '__build';
 var assets = 'assets/';
-var sourceMap = require('./src/sourcemap.json');
+var pathmap = require('./src/pathmap.json');
 
 function makeConf(options) {
     options = options || {};
@@ -50,7 +50,7 @@ function makeConf(options) {
 
         resolve: {
             root: [srcDir, './node_modules'],
-            alias: sourceMap,
+            alias: pathmap,
             extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
         },
 
