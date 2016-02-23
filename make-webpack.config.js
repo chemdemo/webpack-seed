@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-02-03 17:12:27
+* @Last Modified time: 2016-02-04 15:16:34
 */
 
 'use strict';
@@ -104,7 +104,7 @@ module.exports = (options) => {
         output: {
             path: path.resolve(assets),
             filename: debug ? '[name].js' : 'js/[chunkhash:8].[name].min.js',
-            chunkFilename: debug ? 'chunk.js' : 'js/[chunkhash:8].chunk.min.js',
+            chunkFilename: debug ? '[chunkhash:8].chunk.js' : 'js/[chunkhash:8].chunk.min.js',
             hotUpdateChunkFilename: debug ? '[id].js' : 'js/[id].[chunkhash:8].min.js',
             publicPath: publicPath
         },
