@@ -30,7 +30,7 @@ let entries = (() => {
     let entryFiles = glob.sync(jsDir + '/*.{js,jsx}')
     let map = {}
 
-    entryFiles.forEach(function(filePath) {
+    entryFiles.forEach((filePath) => {
         let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
         map[filename] = filePath
     })
@@ -54,7 +54,7 @@ module.exports = (options) => {
         let entryHtml = glob.sync(srcDir + '/*.html')
         let r = []
 
-        entryHtml.forEach(function(filePath) {
+        entryHtml.forEach((filePath) => {
             let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
             let conf = {
                 template: filePath,
