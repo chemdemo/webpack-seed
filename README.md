@@ -1,4 +1,4 @@
-# webpack-bootstrap
+# webpack-seed
 
 基于webpack+gulp搭建纯静态页面型前端工程解决方案模板。
 
@@ -13,7 +13,7 @@
 ### 拷贝项目模板
 
 ``` bash
-$ git clone https://github.com/chemdemo/webpack-bootstrap.git
+$ git clone https://github.com/chemdemo/webpack-seed.git
 ```
 
 
@@ -22,7 +22,7 @@ $ git clone https://github.com/chemdemo/webpack-bootstrap.git
 ``` bash
 $ npm install -g gulp webpack
 $ npm install -g node-dev # 推荐这个工具，代码改动会自动重启node进程
-$ cd webpack-bootstrap && npm install
+$ cd webpack-seed && npm install
 ```
 
 ### 本地开发环境

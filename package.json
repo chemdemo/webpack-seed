@@ -1,5 +1,5 @@
 {
-  "name": "webpack-bootstrap",
+  "name": "webpack-seed",
   "description": "Frontend engineering solution based on webpack.",
   "version": "0.1.0",
   "scripts": {
