@@ -1,8 +1,8 @@
 /*
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
-* @Last Modified by:   dmyang
-* @Last Modified time: 2016-02-04 15:16:34
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2016-03-09 22:34:32
 */
 
 'use strict';
@@ -128,7 +128,7 @@ module.exports = (options) => {
                             optimizationLevel: 3, pngquant:{quality: "65-80", speed: 4}}',
                         // url-loader更好用，小于10KB的图片会自动转成dataUrl，
                         // 否则则调用file-loader，参数直接传入
-                        'url?limit=10000&name=img/[hash:8].[name].[ext]',
+                        'url?limit=10000&name=assets/[hash:8].[name].[ext]',
                     ]
                 },
                 {
