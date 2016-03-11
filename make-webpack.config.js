@@ -57,7 +57,7 @@ module.exports = (options) => {
         entryHtml.forEach((filePath) => {
             let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
             let conf = {
-                template: filePath,
+                template: 'html!' + filePath,
                 filename: filename + '.html'
             }
 
