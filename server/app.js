@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2016-02-03 17:11:34
+ * @Last Modified time: 2016-03-17 19:28:20
  */
 
 'use strict';
@@ -86,7 +86,7 @@ app.use(serve(staticDir, {
 
 app = http.createServer(app.callback())
 
-app.listen(pkg.localServer.port, 'localhost', () => {
+app.listen(pkg.localServer.port, '127.0.0.1', () => {
     let url = util.format('http://%s:%d', 'localhost', pkg.localServer.port)
 
     console.log('Listening at %s', url)
