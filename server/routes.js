@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-07-31 11:41:38
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-03-15 19:14:48
+* @Last Modified time: 2016-03-17 19:23:10
 */
 
 'use strict';
@@ -35,7 +35,7 @@ module.exports = (router, app, staticDir) => {
     });
 
     // proxy api
-    router.get('/api/foo/bar', proxy({url: 'http://foo.bar.com'}));
+    router.get('/api/foo/bar', proxy({host: 'http://foo.bar.com'}));
 
     render(app, {
         root: __dirname,
