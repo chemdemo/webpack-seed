@@ -1,6 +1,6 @@
 # webpack-seed
 
-基于webpack+gulp搭建纯静态页面型前端工程解决方案模板。
+基于webpack搭建纯静态页面型前端工程解决方案模板。
 
 
 ### 安装软件
