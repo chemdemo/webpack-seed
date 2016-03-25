@@ -75,8 +75,14 @@ if(debug) {
     let webpackDevMiddleware = require('koa-webpack-dev-middleware')
     let webpack = require('webpack')
     let webpackConf = require('../webpack-dev.config')
+    let compiler = webpack(webpackConf)
 
-    app.use(webpackDevMiddleware(webpack(webpackConf), webpackConf.devServer))
+    app.use(webpackDevMiddleware(compiler, webpackConf.devServer))
+    let hotMiddleware = require("webpack-hot-middleware")(compiler);
+    app.use(function* (next) {
+      yield hotMiddleware.bind(null, this.req, this.res);
+      yield next;
+    });
 }
 
 // handle static files
