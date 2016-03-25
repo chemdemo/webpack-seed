@@ -57,7 +57,7 @@ module.exports = (options) => {
         entryHtml.forEach((filePath) => {
             let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
             let conf = {
-                template: 'html!' + filePath,
+                template: filePath,
                 filename: filename + '.html'
             }
 
@@ -81,7 +81,7 @@ module.exports = (options) => {
     } else {
         // 编译阶段，css分离出来单独引入
         cssLoader = ExtractTextPlugin.extract('style', 'css?minimize') // enable minimize
-        scssLoader = ExtractTextPlugin.extract('style', 'css?minimize', 'sass')
+        scssLoader = ExtractTextPlugin.extract('style', 'css?minimize!sass')
 
         plugins.push(
             new ExtractTextPlugin('css/[contenthash:8].[name].min.css', {
