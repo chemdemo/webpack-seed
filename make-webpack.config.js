@@ -169,5 +169,20 @@ module.exports = (options) => {
         }
     }
 
+    if (debug) {
+        ((entry) => {
+            for  (let key of Object.keys(entry)) {
+                if (! Array.isArray(entry[key])) {
+                    entry[key] = Array.of(entry[key])
+                }
+                entry[key].push('webpack-hot-middleware/client?reload=true')
+            }
+        })(config.entry)
+    }
+
+    config.plugins.push( new webpack.optimize.OccurenceOrderPlugin() )
+    config.plugins.push( new webpack.HotModuleReplacementPlugin() )
+    config.plugins.push( new webpack.NoErrorsPlugin() )
+
     return config
 }
