@@ -13,7 +13,7 @@ let webpack = require('webpack')
 let gutil = require('gulp-util')
 
 let webpackConf = require('./webpack.config')
-let webpackDevConf = require('./webpack-dev.config')
+// let webpackDevConf = require('./webpack-dev.config')
 
 let src = process.cwd() + '/src'
 let assets = process.cwd() + '/assets'

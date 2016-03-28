@@ -169,5 +169,21 @@ module.exports = (options) => {
         }
     }
 
+    if (debug) {
+        // 为实现webpack-hot-middleware做相关配置
+        // @see https://github.com/glenjamin/webpack-hot-middleware
+        ((entry) => {
+            for  (let key of Object.keys(entry)) {
+                if (! Array.isArray(entry[key])) {
+                    entry[key] = Array.of(entry[key])
+                }
+                entry[key].push('webpack-hot-middleware/client?reload=true')
+            }
+        })(config.entry)
+
+        config.plugins.push( new webpack.HotModuleReplacementPlugin() )
+        config.plugins.push( new webpack.NoErrorsPlugin() )
+    }
+
     return config
 }
