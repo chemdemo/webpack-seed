@@ -22,7 +22,7 @@
     "colors": "^1.1.2",
     "css-loader": "^0.15.6",
     "ejs-loader": "^0.2.1",
-    "extract-text-webpack-plugin": "^0.8.2",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.4",
     "glob": "^6.0.4",
     "gulp": "^3.9.0",
