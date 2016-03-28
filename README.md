@@ -116,6 +116,15 @@ output: {
 ...
 ```
 
+### 修改日志
+
+#### 2016.03.28
+
+- 升级`extract-text-webpack-plugin`到v1.0+
+- webpack配置修改，开发模式下css也是用link引用，便于调试
+- webpack配置pathMap项，添加React等常用lib的默认路径
+- webpack配置增加liveload支持 by @liupy525
+
 ### License
 
 MIT.
