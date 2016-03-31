@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-03-28 10:31:25
+* @Last Modified time: 2016-03-31 19:10:23
 */
 
 'use strict';
@@ -81,6 +81,15 @@ module.exports = (options) => {
 
         return r
     }()
+
+    plugins.push(
+        new webpack.ProvidePlugin({
+            React: 'react',
+            ReactDOM: 'react-dom',
+            _: 'lodash',
+            $: 'jquery'
+        })
+    )
 
     if(debug) {
         extractCSS = new ExtractTextPlugin('css/[name].css?[contenthash]')
