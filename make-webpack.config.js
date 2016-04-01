@@ -1,8 +1,8 @@
 /*
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
-* @Last Modified by:   dmyang
-* @Last Modified time: 2016-03-31 19:10:23
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2016-04-01 20:42:37
 */
 
 'use strict';
@@ -24,9 +24,6 @@ let srcDir = path.resolve(process.cwd(), 'src')
 let assets = path.resolve(process.cwd(), 'assets')
 let nodeModPath = path.resolve(__dirname, './node_modules')
 let pathMap = Object.assign({
-    'react': path.join(nodeModPath, '/react/dist/react.js'),
-    'react-with-addons': path.join(nodeModPath, '/react/dist/react-with-addons.js'),
-    'react-dom': path.join(nodeModPath, '/react-dom/dist/react-dom.js'),
     'jquery': path.join(nodeModPath, '/jquery/dist/jquery.js'),
     'zepto': path.join(nodeModPath, '/zepto/zepto.min.js'),
 }, require('./src/pathmap.json'))
@@ -145,7 +142,7 @@ module.exports = (options) => {
         },
 
         resolve: {
-            root: [srcDir, './node_modules'],
+            root: [srcDir, nodeModPath],
             alias: pathMap,
             extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
         },
