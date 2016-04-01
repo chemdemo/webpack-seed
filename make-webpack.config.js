@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   chemdemo
-* @Last Modified time: 2016-04-01 20:42:37
+* @Last Modified time: 2016-04-01 20:48:56
 */
 
 'use strict';
@@ -147,10 +147,6 @@ module.exports = (options) => {
             extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
         },
 
-        resolveLoader: {
-            root: path.join(__dirname, 'node_modules')
-        },
-
         module: {
             loaders: [
                 {
@@ -169,7 +165,7 @@ module.exports = (options) => {
                 {test: /\.(tpl|ejs)$/, loader: 'ejs'},
                 {test: /\.css$/, loader: cssLoader},
                 {test: /\.scss$/, loader: sassLoader},
-                {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel?presets[]=react,presets[]=es2015'}
+                {test: /\.jsx?$/, loader: 'babel?presets[]=react,presets[]=es2015'}
             ]
         },
 
