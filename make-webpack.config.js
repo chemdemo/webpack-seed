@@ -1,8 +1,8 @@
 /*
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
-* @Last Modified by:   chemdemo
-* @Last Modified time: 2016-04-01 20:48:56
+* @Last Modified by:   dmyang
+* @Last Modified time: 2016-05-23 09:41:32
 */
 
 'use strict';
@@ -23,10 +23,7 @@ let CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
 let srcDir = path.resolve(process.cwd(), 'src')
 let assets = path.resolve(process.cwd(), 'assets')
 let nodeModPath = path.resolve(__dirname, './node_modules')
-let pathMap = Object.assign({
-    'jquery': path.join(nodeModPath, '/jquery/dist/jquery.js'),
-    'zepto': path.join(nodeModPath, '/zepto/zepto.min.js'),
-}, require('./src/pathmap.json'))
+let pathMap = require('./src/pathmap.json')
 
 let entries = (() => {
     let jsDir = path.resolve(srcDir, 'js')
@@ -79,14 +76,15 @@ module.exports = (options) => {
         return r
     }()
 
-    plugins.push(
+    // 没有真正引用也会加载到runtime，如果没安装这些模块会导致报错，有点坑
+    /*plugins.push(
         new webpack.ProvidePlugin({
             React: 'react',
             ReactDOM: 'react-dom',
-            _: 'lodash',
+            _: 'lodash', 按需引用
             $: 'jquery'
         })
-    )
+    )*/
 
     if(debug) {
         extractCSS = new ExtractTextPlugin('css/[name].css?[contenthash]')
