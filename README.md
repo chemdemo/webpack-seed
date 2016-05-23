@@ -118,6 +118,11 @@ output: {
 
 ### 修改日志
 
+#### 2016.05.23
+
+- 修复版本升级带来的一些bug
+- 增加React demo（其实本来就是支持的T_T）
+
 #### 2016.03.28
 
 - 升级`extract-text-webpack-plugin`到v1.0+
