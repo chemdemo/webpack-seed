@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-05-23 09:41:32
+* @Last Modified time: 2016-07-04 18:52:26
 */
 
 'use strict';
@@ -36,7 +36,7 @@ let entries = (() => {
     })
 
     return map
-}())
+})()
 let chunks = Object.keys(entries)
 
 module.exports = (options) => {
