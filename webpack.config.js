@@ -2,11 +2,11 @@
 * @Author: dmyang
 * @Date:   2015-05-18 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-02-04 14:24:58
+* @Last Modified time: 2016-07-12 15:29:19
 */
 
 'use strict';
 
 let genConf = require('./make-webpack.config')
 
-module.exports = genConf({debug: false})
+module.exports = genConf({dev: false})

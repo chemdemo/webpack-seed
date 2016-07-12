@@ -2,28 +2,29 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-07-04 18:52:26
+* @Last Modified time: 2016-07-12 15:47:07
 */
 
 'use strict';
 
-let path = require('path')
-let fs = require('fs')
+const path = require('path')
+const fs = require('fs')
 
-let webpack = require('webpack')
-let _ = require('lodash')
-let glob = require('glob')
+const webpack = require('webpack')
+const _ = require('lodash')
+const glob = require('glob')
 
-let ExtractTextPlugin = require('extract-text-webpack-plugin')
-let HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-let UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
-let CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
+const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
+const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
+const DefinePlugin = webpack.DefinePlugin
 
-let srcDir = path.resolve(process.cwd(), 'src')
-let assets = path.resolve(process.cwd(), 'assets')
-let nodeModPath = path.resolve(__dirname, './node_modules')
-let pathMap = require('./src/pathmap.json')
+const srcDir = path.resolve(process.cwd(), 'src')
+const assets = path.resolve(process.cwd(), 'assets')
+const nodeModPath = path.resolve(__dirname, './node_modules')
+const pathMap = require('./src/pathmap.json')
 
 let entries = (() => {
     let jsDir = path.resolve(srcDir, 'js')
@@ -42,7 +43,7 @@ let chunks = Object.keys(entries)
 module.exports = (options) => {
     options = options || {}
 
-    let debug = options.debug !== undefined ? options.debug : true
+    let dev = options.dev !== undefined ? options.dev : true
     // 这里publicPath要使用绝对路径，不然scss/css最终生成的css图片引用路径是错误的，应该是scss-loader的bug
     let publicPath = '/'
     let extractCSS
@@ -86,7 +87,7 @@ module.exports = (options) => {
         })
     )*/
 
-    if(debug) {
+    if(dev) {
         extractCSS = new ExtractTextPlugin('css/[name].css?[contenthash]')
         cssLoader = extractCSS.extract(['css'])
         sassLoader = extractCSS.extract(['css', 'sass'])
@@ -115,6 +116,8 @@ module.exports = (options) => {
                     except: ['$', 'exports', 'require']
                 }
             }),
+            // use `production` mode
+            new DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify('production')}}),
             // new AssetsPlugin({
             //     filename: path.resolve(assets, 'source-map.json')
             // }),
@@ -133,9 +136,9 @@ module.exports = (options) => {
 
         output: {
             path: assets,
-            filename: debug ? '[name].js' : 'js/[chunkhash:8].[name].min.js',
-            chunkFilename: debug ? '[chunkhash:8].chunk.js' : 'js/[chunkhash:8].chunk.min.js',
-            hotUpdateChunkFilename: debug ? '[id].js' : 'js/[id].[chunkhash:8].min.js',
+            filename: dev ? '[name].js' : 'js/[chunkhash:8].[name].min.js',
+            chunkFilename: dev ? '[chunkhash:8].chunk.js' : 'js/[chunkhash:8].chunk.min.js',
+            hotUpdateChunkFilename: dev ? '[id].js' : 'js/[id].[chunkhash:8].min.js',
             publicPath: publicPath
         },
 
@@ -194,7 +197,7 @@ module.exports = (options) => {
         }
     }
 
-    if (debug) {
+    if (dev) {
         // 为实现webpack-hot-middleware做相关配置
         // @see https://github.com/glenjamin/webpack-hot-middleware
         ((entry) => {
