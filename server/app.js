@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2016-03-17 19:28:20
+ * @Last Modified time: 2016-07-13 10:34:50
  */
 
 'use strict';
@@ -22,9 +22,9 @@ let open = require('open')
 // load local modules
 let pkg = require('../package.json')
 let env = process.argv[2] || process.env.NODE_ENV
-let debug = 'production' !== env
-let viewDir = debug ? 'src' : 'assets'
-let staticDir = path.resolve(__dirname, '../' + (debug ? 'src' : 'assets'))
+let dev = 'production' !== env
+let viewDir = dev ? 'src' : 'assets'
+let staticDir = path.resolve(__dirname, '../' + (dev ? 'src' : 'assets'))
 
 // load routes
 let routes = require('./routes')
@@ -71,7 +71,7 @@ app.use(function*(next) {
 routes(router, app, staticDir)
 app.use(router.routes())
 
-if(debug) {
+if(dev) {
     let webpackDevMiddleware = require('koa-webpack-dev-middleware')
     let webpack = require('webpack')
     let webpackConf = require('../webpack-dev.config')
@@ -86,7 +86,7 @@ if(debug) {
     app.use(function* (next) {
       yield hotMiddleware.bind(null, this.req, this.res);
       yield next;
-    });
+    })
 }
 
 // handle static files
