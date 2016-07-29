@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2016-07-13 10:34:50
+ * @Last Modified time: 2016-07-29 17:53:40
  */
 
 'use strict';
@@ -52,7 +52,7 @@ app.proxy = true
 // global events listen
 app.on('error', (err, ctx) => {
     err.url = err.url || ctx.request.url
-    console.error(err, ctx)
+    console.error(err.stack, ctx)
 })
 
 // handle favicon.ico

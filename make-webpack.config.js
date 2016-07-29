@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-07-12 15:47:07
+* @Last Modified time: 2016-07-29 19:21:07
 */
 
 'use strict';
@@ -77,6 +77,13 @@ module.exports = (options) => {
         return r
     }()
 
+    plugins.push(
+        new webpack.DllReferencePlugin({
+            context: process.cwd(),
+            manifest: require(path.join(srcDir, 'dll', 'js', 'ReactStuff-manifest.json'))
+        })
+    )
+
     // 没有真正引用也会加载到runtime，如果没安装这些模块会导致报错，有点坑
     /*plugins.push(
         new webpack.ProvidePlugin({
@@ -133,6 +140,7 @@ module.exports = (options) => {
             // 用到什么公共lib（例如React.js），就把它加进vender去，目的是将公用库单独提取打包
             'vender': ['zepto']
         }),
+        // entry: entries,
 
         output: {
             path: assets,
