@@ -118,6 +118,12 @@ output: {
 
 ### 修改日志
 
+#### 2016.07.31
+
+ - 将jshint替换为eslint,支持Babel等语法的检查
+ - 添加Travis CI支持，提交和pull request将会自动构建并lint，ReadMe文件添加构建状态徽章
+
+
 #### 2016.07.12
 
 - 配置增加`DefinePlugin`插件，即生产模式build时使用`production`模式，减小打包后文件的体积
