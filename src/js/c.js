@@ -22,3 +22,6 @@ var bar = require('./helpers/bar');
 var url = require('./utils/url');
 
 console.log(_)
+report($)
+report(bar)
+report(url)

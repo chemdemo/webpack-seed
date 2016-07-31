@@ -26,7 +26,7 @@ if('dialog' === component) {
     require.ensure([], function(require) {
         var dialog = require('./components/dialog');
         // todo ...
-
+        report(dialog);
         $('#dialog').removeClass('none');
     });
 }
@@ -35,7 +35,7 @@ if('toast' === component) {
     require.ensure([], function(require) {
         var toast = require('./components/toast');
         // todo ...
-
+        report(toast);
         $('#toast').removeClass('none');
     });
 }
