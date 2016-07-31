@@ -48,7 +48,6 @@
     "koa-webpack-dev-middleware": "^1.0.1",
     "lodash": "^3.10.0",
     "node-libs-browser": "^0.5.2",
-    "node-sass": "^3.8.0",
     "open": "0.0.5",
     "sass-loader": "^1.0.3",
     "style-loader": "^0.12.3",

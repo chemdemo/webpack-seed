@@ -7,3 +7,6 @@ node_js:
   - stable
 script:
   - npm run build
+before_script:
+  - npm install -g gulp webpack
+  - npm install -g node-dev
