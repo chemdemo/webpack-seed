@@ -1,4 +1,4 @@
-# webpack-seed [![Build Status](https://travis-ci.org/ian4hu/webpack-seed.svg?branch=develop)](https://travis-ci.org/ian4hu/webpack-seed)
+# webpack-seed [![Build Status](https://travis-ci.org/ian4hu/webpack-seed.svg?branch=master)](https://travis-ci.org/ian4hu/webpack-seed)
 
 基于webpack搭建纯静态页面型前端工程解决方案模板。
 
