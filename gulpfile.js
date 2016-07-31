@@ -31,6 +31,19 @@ gulp.task('hint', () => {
         .pipe(jshint.reporter(stylish));
 })
 
+gulp.task('ci-hint', () => {
+    let jshint = require('gulp-jshint')
+    let stylish = require('jshint-stylish')
+
+    return gulp.src([
+            '!' + src + '/js/lib/**/*.js',
+            src + '/js/**/*.js'
+        ])
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish))
+        .pipe(jshint.reporter('fail'));
+})
+
 // clean assets
 gulp.task('clean', ['hint'], () => {
     let clean = require('gulp-clean')
