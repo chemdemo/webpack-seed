@@ -96,8 +96,8 @@ module.exports = (options) => {
 
     if(dev) {
         extractCSS = new ExtractTextPlugin('css/[name].css?[contenthash]')
-        cssLoader = extractCSS.extract(['css'])
-        sassLoader = extractCSS.extract(['css', 'sass'])
+        cssLoader = extractCSS.extract('style', ['css'])
+        sassLoader = extractCSS.extract('style', ['css', 'sass'])
         plugins.push(extractCSS, new webpack.HotModuleReplacementPlugin())
     } else {
         extractCSS = new ExtractTextPlugin('css/[contenthash:8].[name].min.css', {
@@ -107,8 +107,8 @@ module.exports = (options) => {
             // @see https://github.com/webpack/extract-text-webpack-plugin
             allChunks: false
         })
-        cssLoader = extractCSS.extract(['css?minimize'])
-        sassLoader = extractCSS.extract(['css?minimize', 'sass'])
+        cssLoader = extractCSS.extract('style', ['css?minimize'])
+        sassLoader = extractCSS.extract('style', ['css?minimize', 'sass'])
 
         plugins.push(
             extractCSS,
