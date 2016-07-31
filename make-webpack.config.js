@@ -77,12 +77,12 @@ module.exports = (options) => {
         return r
     }()
 
-    plugins.push(
+    /*plugins.push(
         new webpack.DllReferencePlugin({
             context: process.cwd(),
             manifest: require(path.join(srcDir, 'dll', 'js', 'ReactStuff-manifest.json'))
         })
-    )
+    )*/
 
     // 没有真正引用也会加载到runtime，如果没安装这些模块会导致报错，有点坑
     /*plugins.push(
