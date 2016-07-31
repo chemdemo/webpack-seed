@@ -53,7 +53,7 @@ module.exports = (options) => {
     // generate entry html files
     // 自动生成入口文件，入口js名必须和入口文件名相同
     // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
-    let plugins = () => {
+    let plugins = (() => {
         let entryHtml = glob.sync(srcDir + '/*.html')
         let r = []
 
@@ -75,7 +75,7 @@ module.exports = (options) => {
         })
 
         return r
-    }()
+    })()
 
     /*plugins.push(
         new webpack.DllReferencePlugin({

@@ -10,16 +10,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-class App extends React.Component {
-    constructor(props: Object, context: Object) {
-        super(props, context)
-
-        this.state = {}
-    }
-
+var App = React.createClass({
     render() {
         return <div>React app</div>
     }
-}
+})
 
 render(<App />, document.getElementById('app'))

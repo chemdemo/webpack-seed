@@ -19,3 +19,6 @@ const _ = require('lodash')
 
 const report = require('./helpers/report')
 const bar = require('./helpers/bar')
+
+report(_)
+report(bar)
