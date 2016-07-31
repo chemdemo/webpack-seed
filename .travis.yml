@@ -5,7 +5,7 @@ branches:
 language: node_js
 node_js:
   - stable
-  - 4
+  - "4.0"
   - 5
   - 6
 script:
@@ -13,3 +13,8 @@ script:
 before_script:
   - npm install -g gulp webpack
   - npm install -g node-dev
+
+cache:
+  bundler: true
+  directories:
+  - node_modules # NPM packages
