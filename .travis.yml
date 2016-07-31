@@ -10,6 +10,7 @@ node_js:
   - 6
 script:
   - npm run build
+  - gulp ci-hint
 before_script:
   - npm install -g gulp webpack
   - npm install -g node-dev
