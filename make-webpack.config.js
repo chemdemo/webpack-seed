@@ -69,20 +69,15 @@ module.exports = (options) => {
                 conf.chunks = ['vender', 'common', filename]
             }
 
-            if(/b|c/.test(filename)) conf.chunks.splice(2, 0, 'common-b-c')
+            if('b' === filename || 'c' === filename) conf.chunks.splice(2, 0, 'common-b-c')
+            // dll打包过的库，只能通过script标签引入？？
+            // if('react-demo' === filename) conf.chunks.splice(2, 0, 'reactStuff')
 
             r.push(new HtmlWebpackPlugin(conf))
         })
 
         return r
     })()
-
-    /*plugins.push(
-        new webpack.DllReferencePlugin({
-            context: process.cwd(),
-            manifest: require(path.join(srcDir, 'dll', 'js', 'ReactStuff-manifest.json'))
-        })
-    )*/
 
     // 没有真正引用也会加载到runtime，如果没安装这些模块会导致报错，有点坑
     /*plugins.push(
@@ -131,16 +126,14 @@ module.exports = (options) => {
             new webpack.optimize.DedupePlugin(),
             new webpack.NoErrorsPlugin()
         )
-
-        plugins.push(new UglifyJsPlugin())
     }
 
     let config = {
         entry: Object.assign(entries, {
             // 用到什么公共lib（例如React.js），就把它加进vender去，目的是将公用库单独提取打包
-            'vender': ['zepto']
+            'vender': ['zepto'],
+            // 'reactStuff': 'assets/dll/js/reactStuff.js'
         }),
-        // entry: entries,
 
         output: {
             path: assets,
@@ -179,6 +172,12 @@ module.exports = (options) => {
         },
 
         plugins: [
+            /*new webpack.DllReferencePlugin({
+                context: process.cwd(),
+                manifest: require(path.join(assets, 'dll', 'js', 'reactStuff-manifest.json')),
+                sourceType: 'var',
+                // name: 'assets/dll/js/reactStuff.js'
+            }),*/
             new CommonsChunkPlugin({
                 name: 'common-b-c',
                 chunks: ['b', 'c']
