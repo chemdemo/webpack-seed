@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-08-01 16:06:08
+* @Last Modified time: 2016-08-01 16:07:10
 */
 
 'use strict';
@@ -172,12 +172,12 @@ module.exports = (options) => {
         },
 
         plugins: [
-            new webpack.DllReferencePlugin({
+            /*new webpack.DllReferencePlugin({
                 context: process.cwd(),
                 manifest: require(path.join(assets, 'dll', 'js', 'reactStuff-manifest.json')),
                 sourceType: 'var',
                 // name: 'assets/dll/js/reactStuff.js'
-            }),
+            }),*/
             new CommonsChunkPlugin({
                 name: 'common-b-c',
                 chunks: ['b', 'c']
