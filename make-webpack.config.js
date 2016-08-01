@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-08-01 16:07:10
+* @Last Modified time: 2016-07-29 19:21:07
 */
 
 'use strict';
@@ -53,7 +53,7 @@ module.exports = (options) => {
     // generate entry html files
     // 自动生成入口文件，入口js名必须和入口文件名相同
     // 例如，a页的入口文件是a.html，那么在js目录下必须有一个a.js作为入口文件
-    let plugins = () => {
+    let plugins = (() => {
         let entryHtml = glob.sync(srcDir + '/*.html')
         let r = []
 
@@ -77,7 +77,7 @@ module.exports = (options) => {
         })
 
         return r
-    }()
+    })()
 
     // 没有真正引用也会加载到runtime，如果没安装这些模块会导致报错，有点坑
     /*plugins.push(
@@ -91,8 +91,8 @@ module.exports = (options) => {
 
     if(dev) {
         extractCSS = new ExtractTextPlugin('css/[name].css?[contenthash]')
-        cssLoader = extractCSS.extract(['css'])
-        sassLoader = extractCSS.extract(['css', 'sass'])
+        cssLoader = extractCSS.extract('style', ['css'])
+        sassLoader = extractCSS.extract('style', ['css', 'sass'])
         plugins.push(extractCSS, new webpack.HotModuleReplacementPlugin())
     } else {
         extractCSS = new ExtractTextPlugin('css/[contenthash:8].[name].min.css', {
@@ -102,8 +102,8 @@ module.exports = (options) => {
             // @see https://github.com/webpack/extract-text-webpack-plugin
             allChunks: false
         })
-        cssLoader = extractCSS.extract(['css?minimize'])
-        sassLoader = extractCSS.extract(['css?minimize', 'sass'])
+        cssLoader = extractCSS.extract('style', ['css?minimize'])
+        sassLoader = extractCSS.extract('style', ['css?minimize', 'sass'])
 
         plugins.push(
             extractCSS,

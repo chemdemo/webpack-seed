@@ -1,0 +1,21 @@
+branches:
+  only:
+    - master
+    - develop
+language: node_js
+node_js:
+  - stable
+  - "4.0"
+  - 5
+  - 6
+script:
+  - npm run build
+  - gulp ci-hint
+before_script:
+  - npm install -g gulp webpack
+  - npm install -g node-dev
+
+cache:
+  bundler: true
+  directories:
+  - node_modules # NPM packages

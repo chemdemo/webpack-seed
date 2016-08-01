@@ -1,4 +1,4 @@
-# webpack-seed
+# webpack-seed [![Build Status](https://travis-ci.org/ian4hu/webpack-seed.svg?branch=master)](https://travis-ci.org/ian4hu/webpack-seed)
 
 基于webpack搭建纯静态页面型前端工程解决方案模板。
 
@@ -117,6 +117,12 @@ output: {
 ```
 
 ### 修改日志
+
+#### 2016.07.31
+
+ - 将jshint替换为eslint,支持Babel等语法的检查
+ - 添加Travis CI支持，提交和pull request将会自动构建并lint，ReadMe文件添加构建状态徽章
+
 
 #### 2016.07.12
 

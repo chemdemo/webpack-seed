@@ -20,15 +20,26 @@ let assets = process.cwd() + '/assets'
 
 // js check
 gulp.task('hint', () => {
-    let jshint = require('gulp-jshint')
-    let stylish = require('jshint-stylish')
+    let eslint = require('gulp-eslint')
 
     return gulp.src([
             '!' + src + '/js/lib/**/*.js',
             src + '/js/**/*.js'
         ])
-        .pipe(jshint())
-        .pipe(jshint.reporter(stylish));
+        .pipe(eslint())
+        .pipe(eslint.format());
+})
+
+gulp.task('ci-hint', () => {
+    let eslint = require('gulp-eslint')
+
+    return gulp.src([
+            '!' + src + '/js/lib/**/*.js',
+            src + '/js/**/*.js'
+        ])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 })
 
 // clean assets
