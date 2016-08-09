@@ -1,8 +1,8 @@
 /*
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
-* @Last Modified by:   dmyang
-* @Last Modified time: 2016-08-01 16:07:10
+* @Last Modified by:   Ian Hu
+* @Last Modified time: 2016-08-09 22:06:18
 */
 
 'use strict';
@@ -91,8 +91,8 @@ module.exports = (options) => {
 
     if(dev) {
         extractCSS = new ExtractTextPlugin('css/[name].css?[contenthash]')
-        cssLoader = extractCSS.extract(['css'])
-        sassLoader = extractCSS.extract(['css', 'sass'])
+        cssLoader = extractCSS.extract('style', ['css'])
+        sassLoader = extractCSS.extract('style', ['css', 'sass'])
         plugins.push(extractCSS, new webpack.HotModuleReplacementPlugin())
     } else {
         extractCSS = new ExtractTextPlugin('css/[contenthash:8].[name].min.css', {
@@ -102,8 +102,8 @@ module.exports = (options) => {
             // @see https://github.com/webpack/extract-text-webpack-plugin
             allChunks: false
         })
-        cssLoader = extractCSS.extract(['css?minimize'])
-        sassLoader = extractCSS.extract(['css?minimize', 'sass'])
+        cssLoader = extractCSS.extract('style', ['css?minimize'])
+        sassLoader = extractCSS.extract('style', ['css?minimize', 'sass'])
 
         plugins.push(
             extractCSS,
