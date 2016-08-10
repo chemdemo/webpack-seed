@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2016-08-01 15:24:31
+ * @Last Modified time: 2016-08-10 10:09:05
  */
 
 'use strict';
@@ -101,5 +101,5 @@ app.listen(pkg.localServer.port, '127.0.0.1', () => {
 
     console.log('Listening at %s', url)
 
-    // open(url)
+    open(url)
 })
