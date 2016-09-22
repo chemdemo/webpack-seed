@@ -1,8 +1,8 @@
 /*
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
-* @Last Modified by:   Ian Hu
-* @Last Modified time: 2016-08-09 22:06:18
+* @Last Modified by:   dmyang
+* @Last Modified time: 2016-09-22 20:11:17
 */
 
 'use strict';
@@ -23,8 +23,8 @@ const DefinePlugin = webpack.DefinePlugin
 
 const srcDir = path.resolve(process.cwd(), 'src')
 const assets = path.resolve(process.cwd(), 'assets')
-const nodeModPath = path.resolve(__dirname, './node_modules')
-const pathMap = require('./src/pathmap.json')
+const nodeModPath = path.resolve(__dirname, '../node_modules')
+const pathMap = require('../src/pathmap.json')
 
 let entries = (() => {
     let jsDir = path.resolve(srcDir, 'js')

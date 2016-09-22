@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2016-07-29 17:04:42
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-08-01 15:57:36
+* @Last Modified time: 2016-09-22 20:11:53
 */
 
 'use strict'
@@ -15,7 +15,7 @@ const srcDir = path.resolve(process.cwd(), 'src')
 const assets = path.resolve(process.cwd(), 'assets')
 
 const reactStuff = ['react', 'react-dom']
-const zStuff = ['./src/js/lib/zepto.js']
+const zStuff = ['../src/js/lib/zepto.js']
 
 module.exports = {
     // context: process.cwd(),
