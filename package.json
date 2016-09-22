@@ -11,12 +11,11 @@
   "localServer": {
     "port": 3010
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "lodash": "^3.10.1",
     "react": "^15.1.0",
-    "react-dom": "^15.1.0"
-  },
-  "devDependencies": {
+    "react-dom": "^15.1.0",
     "babel-core": "^6.1.21",
     "babel-loader": "^6.1.0",
     "babel-preset-es2015": "^6.1.18",
