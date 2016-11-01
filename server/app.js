@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2016-08-10 10:09:05
+ * @Last Modified time: 2016-11-01 15:32:17
  */
 
 'use strict';
@@ -81,11 +81,11 @@ if(dev) {
     app.use(webpackDevMiddleware(compiler, webpackConf.devServer))
 
     // 为实现HMR配置webpack-hot-middleware
-    let hotMiddleware = require("webpack-hot-middleware")(compiler);
+    let hotMiddleware = require('webpack-hot-middleware')(compiler)
     // Koa对webpack-hot-middleware做适配
     app.use(function* (next) {
-      yield hotMiddleware.bind(null, this.req, this.res);
-      yield next;
+        yield hotMiddleware.bind(null, this.req, this.res)
+        yield next
     })
 }
 
