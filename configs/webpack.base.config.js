@@ -2,7 +2,7 @@
 * @Author: dmyang
 * @Date:   2015-08-02 14:16:41
 * @Last Modified by:   dmyang
-* @Last Modified time: 2016-09-22 20:11:17
+* @Last Modified time: 2016-11-01 16:18:07
 */
 
 'use strict';
@@ -16,11 +16,13 @@ const glob = require('glob')
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
 const DefinePlugin = webpack.DefinePlugin
 
+const pkg = require('../package.json')
 const srcDir = path.resolve(process.cwd(), 'src')
 const assets = path.resolve(process.cwd(), 'assets')
 const nodeModPath = path.resolve(__dirname, '../node_modules')
@@ -172,12 +174,6 @@ module.exports = (options) => {
         },
 
         plugins: [
-            /*new webpack.DllReferencePlugin({
-                context: process.cwd(),
-                manifest: require(path.join(assets, 'dll', 'js', 'reactStuff-manifest.json')),
-                sourceType: 'var',
-                // name: 'assets/dll/js/reactStuff.js'
-            }),*/
             new CommonsChunkPlugin({
                 name: 'common-b-c',
                 chunks: ['b', 'c']
@@ -204,7 +200,7 @@ module.exports = (options) => {
         }
     }
 
-    if (dev) {
+    if(dev) {
         // 为实现webpack-hot-middleware做相关配置
         // @see https://github.com/glenjamin/webpack-hot-middleware
         ((entry) => {
@@ -216,8 +212,11 @@ module.exports = (options) => {
             }
         })(config.entry)
 
-        config.plugins.push( new webpack.HotModuleReplacementPlugin() )
-        config.plugins.push( new webpack.NoErrorsPlugin() )
+        config.plugins.push(new webpack.HotModuleReplacementPlugin())
+        config.plugins.push(new webpack.NoErrorsPlugin())
+    } else {
+        // @see https://github.com/th0r/webpack-bundle-analyzer
+        // config.plugins.push(new BundleAnalyzerPlugin(pkg.bundleAnalyzerConf))
     }
 
     return config
