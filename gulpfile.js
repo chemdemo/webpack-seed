@@ -1,8 +1,8 @@
 /*
 * @Author: dmyang
 * @Date:   2015-06-16 15:19:59
- * @Last Modified by: JerryC
- * @Last Modified time: 2016-09-26 11:54:18
+ * @Last Modified by:   dmyang
+ * @Last Modified time: 2016-11-01 15:39:40
 */
 
 'use strict';
@@ -12,8 +12,8 @@ let webpack = require('webpack')
 
 let gutil = require('gulp-util')
 
-let webpackConf = require('./configs/webpack.config')
-// let webpackDevConf = require('../configs/webpack-dev.config')
+let webpackConf = require('./configs/webpack.prod.config')
+// let webpackDevConf = require('../configs/webpack.dev.config')
 
 let src = process.cwd() + '/src'
 let assets = process.cwd() + '/assets'

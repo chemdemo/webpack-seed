@@ -2,7 +2,7 @@
  * @Author: dmyang
  * @Date:   2015-06-29 18:42:30
  * @Last Modified by:   dmyang
- * @Last Modified time: 2016-11-01 15:32:17
+ * @Last Modified time: 2016-11-01 15:39:58
  */
 
 'use strict';
@@ -74,7 +74,7 @@ app.use(router.routes())
 if(dev) {
     let webpackDevMiddleware = require('koa-webpack-dev-middleware')
     let webpack = require('webpack')
-    let webpackConf = require('../webpack-dev.config')
+    let webpackConf = require('../configs/webpack.dev.config')
     let compiler = webpack(webpackConf)
 
     // 为使用Koa做服务器配置koa-webpack-dev-middleware
